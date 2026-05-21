@@ -52,7 +52,7 @@ export default function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-9 h-9   aspect-square bg-[#386641] text-white rounded-md flex flex-col items-center justify-center text-base font-bold shadow hover:bg-[#2a4d30] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#386641]/55"
+        className="w-9 h-9 cursor-pointer  aspect-square bg-[#000000] text-white rounded-md flex flex-col items-center justify-center text-base font-bold shadow hover:bg-[#1a1a1a] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55"
         aria-label="Change language"
       >
         <Languages size={18} className="mb-0.5" />
@@ -60,7 +60,7 @@ export default function LanguageSwitcher() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-xs w-full p-6 rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-[#386641] text-center">
+            <DialogTitle className="text-lg font-bold text-[#000000] text-center">
               {locale === 'ku' ? 'گۆڕینی زمان' : 'Change Language'}
             </DialogTitle>
             <DialogDescription className="text-center mb-4">
@@ -74,10 +74,10 @@ export default function LanguageSwitcher() {
                 type="button"
                 onClick={() => handleLanguageChange(lang.code)}
                 disabled={isPending || locale === lang.code}
-                className={`w-24 h-8 rounded-xl font-bold border-2 text-base flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#386641]/55
+                className={`w-24 h-8 rounded-xl font-bold border-2 text-base flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55
                   ${locale === lang.code
-                    ? 'bg-[#386641] text-white border-[#386641] shadow'
-                    : 'bg-white text-[#386641] border-[#386641] hover:bg-[#386641]/90 hover:text-white'}
+                    ? 'bg-[#000000] text-white border-[#000000] shadow'
+                    : 'bg-white text-[#000000] border-[#000000] hover:bg-[#000000]/90 hover:text-white'}
                 `}
                 aria-current={locale === lang.code ? 'true' : undefined}
               >
@@ -90,3 +90,4 @@ export default function LanguageSwitcher() {
     </>
   );
 }
+

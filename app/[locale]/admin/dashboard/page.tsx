@@ -19,6 +19,7 @@ import { useLocale } from 'next-intl';
 import DashboardLanguageSwitcher from '@/components/DashboardLanguageSwitcher';
 import ColorPicker from '@/components/ColorPicker';
 import { type MenuItem } from '@/lib/db';
+import { CATEGORIES } from '@/lib/categories';
 
 function normalizeSizes(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -404,19 +405,19 @@ export default function DashboardPage() {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12">
               <Image
-                src="/image/logo.jpg"
+                src="/image/image.png"
                 alt="Logo"
                 width={50}
                 height={50}
                 className="w-full h-full object-contain"
               />
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#386641]">داشبۆردی ئەدمین</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#000000]">داشبۆردی ئەدمین</h1>
           </div>
           <div className="flex items-center gap-3">
             <Button
               onClick={handleLogout}
-              className="bg-[#386641] hover:bg-green-700 text-white rounded-lg px-4 py-2"
+              className="bg-[#000000] hover:bg-zinc-800 text-white rounded-lg px-4 py-2"
             >
               <LogOut className="w-4 h-4 mr-2" />
               چوونەدەرەوە
@@ -432,7 +433,7 @@ export default function DashboardPage() {
               resetForm();
               setShowAddModal(true);
             }}
-            className="bg-[#386641] hover:bg-green-700 text-white rounded-lg px-6 py-3 font-bold flex items-center gap-2 w-full md:w-auto md:ml-auto"
+            className="bg-[#000000] hover:bg-zinc-800 text-white rounded-lg px-6 py-3 font-bold flex items-center gap-2 w-full md:w-auto md:ml-auto"
           >
             <Plus className="w-5 h-5" />
             زیادکردنی کاڵای نوێ
@@ -441,14 +442,14 @@ export default function DashboardPage() {
 
         <div className="w-full mb-4 flex justify-center">
           <h2 className="text-xl font-bold text-gray-800">
-            ژمارەی کاڵاکان : <span className="text-[#386641]">{items.length}</span>
+            ژمارەی کاڵاکان : <span className="text-[#000000]">{items.length}</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {items.length === 0 ? (
             <div className="col-span-full text-center py-12 bg-white rounded-xl">
-              <p className="text-gray-500 text-lg">هیچ خواردنێک بەردەست نییە!</p>
+              <p className="text-gray-500 text-lg">هیچ کاڵایەک بەردەست نییە!</p>
             </div>
           ) : (
             items.map((item, idx) => {
@@ -539,227 +540,230 @@ export default function DashboardPage() {
       </div>
 
       <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
-        <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="lg:max-w-5xl max-h-[80vh] overflow-y-auto p-4 md:p-6">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold py-2 text-center">زیادکردنی خواردنی نوێ</DialogTitle>
-           
+            <DialogTitle className="text-2xl font-bold text-center">زیادکردنی کاڵای نوێ</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name_en" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردن (English) *
-              </label>
-              <input
-                id="name_en"
-                type="text"
-                name="name_en"
-                value={formData.name_en}
-                onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[#386641]"
-                placeholder="Food name in English"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="name_ckb" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردن (Kurdish) *
-              </label>
-              <input
-                id="name_ckb"
-                type="text"
-                name="name_ckb"
-                value={formData.name_ckb}
-                onChange={handleInputChange}
-                placeholder="ناوی خواردنەی"
-                required
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="name_arb" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردن (Arabic) *
-              </label>
-              <input
-                id="name_arb"
-                type="text"
-                name="name_arb"
-                value={formData.name_arb}
-                onChange={handleInputChange}
-                placeholder="اسم الطعام"
-                required
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description_en" className="block text-sm font-semibold text-gray-700 mb-2">
-                وەسف (English)
-              </label>
-              <textarea
-                id="description_en"
-                name="description_en"
-                value={formData.description_en}
-                onChange={handleInputChange}
-                placeholder="Food description in English"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description_ckb" className="block text-sm font-semibold text-gray-700 mb-2">
-                وەسف (Kurdish)
-              </label>
-              <textarea
-                id="description_ckb"
-                name="description_ckb"
-                value={formData.description_ckb}
-                onChange={handleInputChange}
-                placeholder="وەسفی خواردنەی"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description_arb" className="block text-sm font-semibold text-gray-700 mb-2">
-                وەسف (Arabic)
-              </label>
-              <textarea
-                id="description_arb"
-                name="description_arb"
-                value={formData.description_arb}
-                onChange={handleInputChange}
-                placeholder="وصف الطعام"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                سایز
-              </label>
-              <div className="flex gap-2 mb-2 flex-wrap">
-                {formData.sizes.map((size, index) => (
-                  <div key={index} className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">
-                    <span className="text-sm text-gray-700">{size}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeSize(index)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-2">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div>
+                <label htmlFor="name_en" className="block text-xs font-semibold text-gray-700 mb-1">
+                  ناوی کاڵا (English) *
+                </label>
                 <input
+                  id="name_en"
                   type="text"
-                  name="newSize"
-                  value={formData.newSize}
+                  name="name_en"
+                  value={formData.name_en}
                   onChange={handleInputChange}
-                  placeholder="زیادکردنی سایز..."
-                  className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#000000]"
+                  placeholder="English name"
+                  required
                 />
-                <Button
-                  type="button"
-                  onClick={addSize}
-                  className="bg-[#386641] hover:bg-[#2a4d30] text-white"
-                >
-                  زیادکردن
-                </Button>
+              </div>
+              <div>
+                <label htmlFor="name_ckb" className="block text-xs font-semibold text-gray-700 mb-1">
+                  ناوی کاڵا (Kurdish) *
+                </label>
+                <input
+                  id="name_ckb"
+                  type="text"
+                  name="name_ckb"
+                  value={formData.name_ckb}
+                  onChange={handleInputChange}
+                  placeholder="ناوی کاڵا"
+                  required
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900 text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="name_arb" className="block text-xs font-semibold text-gray-700 mb-1">
+                  ناوی کاڵا (Arabic) *
+                </label>
+                <input
+                  id="name_arb"
+                  type="text"
+                  name="name_arb"
+                  value={formData.name_arb}
+                  onChange={handleInputChange}
+                  placeholder="اسم المنتج"
+                  required
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900 text-sm"
+                />
               </div>
             </div>
 
-            <ColorPicker 
-              colors={formData.colors} 
-              onChange={(newColors) => setFormData((prev) => ({ ...prev, colors: newColors }))}
-              maxColors={4}
-            />
-
-            <div>
-              <label htmlFor="category" className="block text-sm font-semibold text-gray-700 mb-2">
-                بەشەکان
-              </label>
-              <select
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
-              >
-                <option value="">هەڵبژاردنی بەشەکان</option>
-                <option value="main">خواردنە سەرەکیەکان</option>
-                <option value="pizza">برژاو</option>
-                <option value="drinks">خواردنەوە</option>
-                <option value="appetizers">مقەبیلات</option>
-                <option value="breakfast">بەیانیان</option>
-              </select>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="block text-sm font-semibold text-gray-700">
-                نەماوە
-              </label>
-              <button
-                type="button"
-                onClick={toggleSoldOut}
-                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#386641] focus:ring-offset-2 ${
-                  formData.is_sold_out ? 'bg-red-600' : 'bg-gray-200'
-                }`}
-              >
-                <span
-                  className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
-                    formData.is_sold_out ? 'translate-x-7' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                 وێنە
-              </label>
-              <div className="relative">
-                <input
-                  id="image_file"
-                  type="file"
-                  name="image_file"
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div>
+                <label htmlFor="description_en" className="block text-xs font-semibold text-gray-700 mb-1">
+                  وەسف (English)
+                </label>
+                <textarea
+                  id="description_en"
+                  name="description_en"
+                  value={formData.description_en}
                   onChange={handleInputChange}
-                  accept="image/*"
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  placeholder="Description"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900 text-xs"
+                  rows={2}
                 />
-                <div className="w-full px-4 py-3 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50 text-[#386641] cursor-pointer transition flex items-center gap-2 justify-center font-bold">
-                  <Upload className="w-5 h-5" />
-                  {formData.image_file_name ? formData.image_file_name : 'کلیک یکە بۆ بارکردن'}
+              </div>
+              <div>
+                <label htmlFor="description_ckb" className="block text-xs font-semibold text-gray-700 mb-1">
+                  وەسف (Kurdish)
+                </label>
+                <textarea
+                  id="description_ckb"
+                  name="description_ckb"
+                  value={formData.description_ckb}
+                  onChange={handleInputChange}
+                  placeholder="وەسف"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900 text-xs"
+                  rows={2}
+                />
+              </div>
+              <div>
+                <label htmlFor="description_arb" className="block text-xs font-semibold text-gray-700 mb-1">
+                  وەسف (Arabic)
+                </label>
+                <textarea
+                  id="description_arb"
+                  name="description_arb"
+                  value={formData.description_arb}
+                  onChange={handleInputChange}
+                  placeholder="الوصف"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900 text-xs"
+                  rows={2}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  سایز
+                </label>
+                <div className="flex gap-1 mb-1 flex-wrap">
+                  {formData.sizes.map((size, index) => (
+                    <div key={index} className="flex items-center gap-0.5 bg-gray-100 px-2 py-0.5 rounded-full">
+                      <span className="text-xs text-gray-700">{size}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSize(index)}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-1">
+                  <input
+                    type="text"
+                    name="newSize"
+                    value={formData.newSize}
+                    onChange={handleInputChange}
+                    placeholder="سایز"
+                    className="flex-1 px-2 py-1.5 text-xs border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
+                  />
+                  <Button
+                    type="button"
+                    onClick={addSize}
+                    className="bg-[#000000] hover:bg-[#1a1a1a] text-white text-xs px-2 py-1"
+                  >
+                    +
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <label htmlFor="category" className="block text-xs font-semibold text-gray-700 mb-1">
+                  بەشەکان
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="w-full px-2 py-1.5 text-xs border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
+                >
+                  <option value="">هەڵبژاردنی بەشەکان</option>
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.label_ckb}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div>
+                <ColorPicker 
+                  colors={formData.colors} 
+                  onChange={(newColors) => setFormData((prev) => ({ ...prev, colors: newColors }))}
+                  maxColors={6}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  وێنە
+                </label>
+                <div className="relative">
+                  <input
+                    id="image_file"
+                    type="file"
+                    name="image_file"
+                    onChange={handleInputChange}
+                    accept="image/*"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <div className="w-full px-3 py-2 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50 text-[#000000] cursor-pointer transition flex items-center gap-1 justify-center font-semibold text-xs h-20 flex-col">
+                    <Upload className="w-4 h-4" />
+                    <span className="text-center">{formData.image_file_name ? formData.image_file_name.substring(0, 12) : 'بارکردن'}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {formData.image_url && (
-              <div className="mt-4">
+              <div className="mt-2">
                 <IKImage
                   src={getAdminImageUrl(formData.image_url)}
                   alt="Preview"
                   width={400}
-                  height={200}
-                  className="w-full h-40 object-cover rounded-lg"
+                  height={150}
+                  className="w-full h-32 object-cover rounded-lg"
                 />
               </div>
             )}
 
+            <div className="flex items-center justify-between gap-2 py-1">
+              <label className="block text-xs font-semibold text-gray-700">
+                نەماوە
+              </label>
+              <button
+                type="button"
+                onClick={toggleSoldOut}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-1 focus:ring-[#000000] focus:ring-offset-1 ${
+                  formData.is_sold_out ? 'bg-red-600' : 'bg-gray-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+                    formData.is_sold_out ? 'translate-x-5' : 'translate-x-0.5'
+                  }`}
+                />
+              </button>
+            </div>
+
             {message && (
-              <div className={`p-3 rounded-lg text-sm font-semibold ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <div className={`p-2 rounded-lg text-xs font-semibold ${messageType === 'success' ? 'bg-gray-100 text-black' : 'bg-red-100 text-red-700'}`}>
                 {message}
               </div>
             )}
 
-            <DialogFooter className="gap-2">
+            <DialogFooter className="gap-2 pt-1">
               <Button
                 type="button"
                 onClick={() => {
@@ -767,14 +771,14 @@ export default function DashboardPage() {
                   resetForm();
                   setMessage('');
                 }}
-                className="bg-gray-500 hover:bg-gray-600 text-white"
+                className="bg-gray-400 hover:bg-gray-500 text-white text-xs py-2"
               >
-                هەڵوەشاندنەوە
+                لابردن
               </Button>
               <Button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#386641] hover:bg-[#2a4d30] text-white"
+                className="bg-[#000000] hover:bg-[#1a1a1a] text-white text-xs py-2"
               >
                 {submitting ? 'زیادکردن...' : 'زیادکردن'}
               </Button>
@@ -784,13 +788,12 @@ export default function DashboardPage() {
       </Dialog>
 
       <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
-        <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="lg:max-w-5xl max-h-[80vh] overflow-y-auto p-4 md:p-6">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center">گۆڕینی زانیاری خواردن</DialogTitle>
-      
+            <DialogTitle className="text-2xl font-bold text-center">گۆڕینی کاڵا</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleEditSubmit} className="space-y-4">
+          <form onSubmit={handleEditSubmit} className="space-y-3">
             <div>
               <label htmlFor="edit-name_en" className="block text-sm font-semibold text-gray-700 mb-2">
                 ناوی خواردنەی (English)
@@ -802,7 +805,7 @@ export default function DashboardPage() {
                 value={formData.name_en}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
               />
             </div>
 
@@ -817,7 +820,7 @@ export default function DashboardPage() {
                 value={formData.name_ckb}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
               />
             </div>
 
@@ -832,7 +835,7 @@ export default function DashboardPage() {
                 value={formData.name_arb}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
               />
             </div>
 
@@ -846,7 +849,7 @@ export default function DashboardPage() {
                 value={formData.description_en}
                 onChange={handleInputChange}
                 placeholder="Food description in English"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
                 rows={3}
               />
             </div>
@@ -861,7 +864,7 @@ export default function DashboardPage() {
                 value={formData.description_ckb}
                 onChange={handleInputChange}
                 placeholder="وەسفی خواردنەی"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
                 rows={3}
               />
             </div>
@@ -876,7 +879,7 @@ export default function DashboardPage() {
                 value={formData.description_arb}
                 onChange={handleInputChange}
                 placeholder="وصف الطعام"
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
                 rows={3}
               />
             </div>
@@ -906,12 +909,12 @@ export default function DashboardPage() {
                   value={formData.newSize}
                   onChange={handleInputChange}
                   placeholder="زیادکردنی سایز..."
-                  className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                  className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
                 />
                 <Button
                   type="button"
                   onClick={addSize}
-                  className="bg-[#386641] hover:bg-[#2a4d30] text-white"
+                  className="bg-[#000000] hover:bg-[#1a1a1a] text-white"
                 >
                   زیادکردن
                 </Button>
@@ -933,14 +936,14 @@ export default function DashboardPage() {
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#386641] text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#000000] text-gray-900"
               >
                 <option value="">هەڵبژاردنی بەشەکان</option>
-                <option value="main">خواردنە سەرەکیەکان</option>
-                <option value="pizza">برژاو</option>
-                <option value="drinks">خواردنەوە</option>
-                <option value="appetizers">مقەبیلات</option>
-                <option value="breakfast">بەیانیان</option>
+                {CATEGORIES.map((cat) => (
+                  <option key={cat.value} value={cat.value}>
+                    {cat.label_ckb}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -951,7 +954,7 @@ export default function DashboardPage() {
               <button
                 type="button"
                 onClick={toggleSoldOut}
-                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#386641] focus:ring-offset-2 ${
+                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#000000] focus:ring-offset-2 ${
                   formData.is_sold_out ? 'bg-red-600' : 'bg-gray-200'
                 }`}
               >
@@ -976,7 +979,7 @@ export default function DashboardPage() {
                   accept="image/*"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
-                <div className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 cursor-pointer hover:border-[#386641] transition flex items-center gap-2 justify-center font-semibold">
+                <div className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 cursor-pointer hover:border-[#000000] transition flex items-center gap-2 justify-center font-semibold">
                   <Upload className="w-4 h-4 text-gray-500" />
                   {formData.image_file_name ? formData.image_file_name : 'فایل هیلبژێرە'}
                 </div>
@@ -995,7 +998,7 @@ export default function DashboardPage() {
             </div>
 
             {message && (
-              <div className={`p-3 rounded-lg text-sm font-semibold ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <div className={`p-3 rounded-lg text-sm font-semibold ${messageType === 'success' ? 'bg-gray-100 text-black' : 'bg-red-100 text-red-700'}`}>
                 {message}
               </div>
             )}
@@ -1017,7 +1020,7 @@ export default function DashboardPage() {
               <Button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#386641] hover:bg-[#2a4d30] text-white"
+                className="bg-[#000000] hover:bg-[#1a1a1a] text-white"
               >
                 {submitting ? 'نوێکردن...' : 'نوێکردنەوە'}
               </Button>
@@ -1036,7 +1039,7 @@ export default function DashboardPage() {
           </DialogHeader>
 
           {message && (
-            <div className={`p-3 rounded-lg text-sm font-semibold ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+            <div className={`p-3 rounded-lg text-sm font-semibold ${messageType === 'success' ? 'bg-gray-100 text-black' : 'bg-red-100 text-red-700'}`}>
               {message}
             </div>
           )}
@@ -1068,3 +1071,4 @@ export default function DashboardPage() {
     </ImageKitProvider>
   );
 }
+

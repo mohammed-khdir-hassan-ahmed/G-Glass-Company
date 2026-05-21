@@ -47,9 +47,10 @@ export default function DashboardLanguageSwitcher() {
       aria-label={`Change dashboard language to ${localeLabels[nextLocale]}`}
       onClick={() => handleChangeLanguage(nextLocale)}
       disabled={isPending}
-      className="h-10 px-4 rounded-full border border-[#2f5536]/25 bg-gradient-to-r from-[#edf8ef] via-white to-[#f0f7f2] shadow-[0_4px_14px_rgba(47,85,54,0.15)] transition-all duration-300 hover:shadow-[0_6px_18px_rgba(47,85,54,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#386641]/55 disabled:cursor-not-allowed disabled:opacity-70 text-xs font-extrabold tracking-wide text-[#386641]"
+      className="h-10 px-4 rounded-full border border-[#000000]/25 bg-gradient-to-r from-[#f5f5f5] via-white to-[#f0f0f0] shadow-[0_4px_14px_rgba(0,0,0,0.15)] transition-all duration-300 hover:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 disabled:cursor-not-allowed disabled:opacity-70 text-xs font-extrabold tracking-wide text-[#000000]"
     >
       {localeLabels[locale]}
     </button>
   );
 }
+

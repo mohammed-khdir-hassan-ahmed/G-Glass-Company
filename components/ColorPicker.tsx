@@ -11,7 +11,7 @@ interface ColorPickerProps {
 
 const PRESET_COLORS = [
   { name: 'سور', value: '#EF4444' },
-  { name: 'سەوز', value: '#22C55E' },
+  { name: 'سەوز', value: '#10B981' },
   { name: 'شین', value: '#3B82F6' },
   { name: 'ئاسمانی', value: '#06B6D4' },
   { name: 'زەرد', value: '#FBBF24' },
@@ -22,7 +22,7 @@ const PRESET_COLORS = [
   { name: 'ڕۆسا', value: '#EC4899' },
 ];
 
-export default function ColorPicker({ colors, onChange, maxColors = 4 }: ColorPickerProps) {
+export default function ColorPicker({ colors, onChange, maxColors = 6 }: ColorPickerProps) {
   const [customColor, setCustomColor] = useState('#000000');
   const [showCustomInput, setShowCustomInput] = useState(false);
 
@@ -44,7 +44,7 @@ export default function ColorPicker({ colors, onChange, maxColors = 4 }: ColorPi
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
           رەنگەکان ({colors.length}/{maxColors})
@@ -130,7 +130,7 @@ export default function ColorPicker({ colors, onChange, maxColors = 4 }: ColorPi
                 onClick={() => setShowCustomInput(true)}
                 className="w-full px-3 py-2 border-2 border-dashed border-gray-300 rounded text-gray-600 hover:border-gray-500 transition text-sm"
               >
-                + رەنگی داییت بزیاد کە
+                +    رەنگی تایبەت زیاد بکە
               </button>
             )}
           </div>
@@ -139,3 +139,4 @@ export default function ColorPicker({ colors, onChange, maxColors = 4 }: ColorPi
     </div>
   );
 }
+

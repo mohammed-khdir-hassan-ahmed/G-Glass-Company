@@ -1,26 +1,42 @@
 'use client';
 
 import { useState, useTransition, useMemo } from 'react';
-import { Search, Utensils, Pizza, Coffee, Salad, Egg, ArrowDownNarrowWideIcon, Home, Beef, BottleWine, Fan } from 'lucide-react';
+import { Search, Home, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import MenuGrid from '@/components/MenuGrid';
 import { useLocale } from 'next-intl';
 import { type MenuItem } from '@/lib/db';
+import { CATEGORIES } from '@/lib/categories';
 
 interface MenuSearchProps {
   items: MenuItem[];
 }
 
-const CATEGORY_ALIASES: Record<string, string[]> = {
-  main: ['main', 'خواردنە سەرەکیەکان'],
-  pizza: ['pizza', 'برژاو'],
-  drinks: ['drinks', 'خواردنەوە'],
-  appetizers: ['appetizers', 'مقەبیلات'],
-  breakfast: ['breakfast', 'بەیانیان'],
+// Map icon names to actual Lucide components
+const ICON_COMPONENTS: Record<string, any> = {
+  'Grid3x3': Home,
+  'Gem': Gem,
+  'Sparkles': Sparkles,
+  'Flower2': Flower2,
+  'Palette': Palette,
+  'Circle': Circle,
+  'Diamond': Diamond,
+  'CheckCircle2': CheckCircle2,
 };
 
+// Build aliases from CATEGORIES config
+const CATEGORY_ALIASES: Record<string, string[]> = {};
+CATEGORIES.forEach((cat) => {
+  CATEGORY_ALIASES[cat.value] = [
+    cat.value,
+    cat.label_en.toLowerCase(),
+    cat.label_ckb.toLowerCase(),
+    cat.label_arb.toLowerCase(),
+  ];
+});
+
 function normalizeCategory(value?: string | null): string {
-  if (!value) return 'main';
+  if (!value) return 'all';
 
   const normalized = value.trim().toLowerCase();
   for (const [key, aliases] of Object.entries(CATEGORY_ALIASES)) {
@@ -29,7 +45,7 @@ function normalizeCategory(value?: string | null): string {
     }
   }
 
-  return value;
+  return value.toLowerCase();
 }
 
 export default function MenuSearch({ items }: MenuSearchProps) {
@@ -55,22 +71,28 @@ export default function MenuSearch({ items }: MenuSearchProps) {
     }
   };
 
-  const categories = [
-    { id: 'all', name: locale === 'en' ? 'All Items' : locale === 'ar' ? 'جميع الأصناف' : ' هەموو کاڵاکان', icon: Home },
-    { id: 'main', name: locale === 'en' ? 'Main Dishes' : locale === 'ar' ? 'الأطباق الرئيسية' : ' گووڵەکان', icon: Fan },
-    { id: 'pizza', name: locale === 'en' ? 'Roasted' : locale === 'ar' ? 'مشويات' : 'سلیکۆنەکان', icon: Beef },
-    { id: 'drinks', name: locale === 'en' ? 'Drinks' : locale === 'ar' ? 'مشروبات' : 'خواردنەوە', icon: BottleWine },
-    { id: 'appetizers', name: locale === 'en' ? 'Appetizers' : locale === 'ar' ? 'المقبلات' : 'مقەبیلات', icon: Salad },
-    { id: 'breakfast', name: locale === 'en' ? 'Breakfast' : locale === 'ar' ? 'فطور' : 'بەیانیان', icon: Egg },
-  ];
+  // Build categories array with proper labels for current locale
+  const categories = CATEGORIES.map((cat) => ({
+    id: cat.value,
+    name:
+      locale === 'ar'
+        ? cat.label_arb
+        : locale === 'ku'
+        ? cat.label_ckb
+        : cat.label_en,
+    icon: ICON_COMPONENTS[cat.icon] || Home,
+  }));
 
-  const categoryMap: { [key: string]: string } = {
-    'main': locale === 'en' ? 'Main Dishes' : locale === 'ar' ? 'الأطباق الرئيسية' : 'هەموو کاڵاکان',
-    'pizza': locale === 'en' ? 'Roasted' : locale === 'ar' ? 'مشويات' : 'گووڵەکان',
-    'drinks': locale === 'en' ? 'Drinks' : locale === 'ar' ? 'مشروبات' : 'خواردنەوە',
-    'appetizers': locale === 'en' ? 'Appetizers' : locale === 'ar' ? 'المقبلات' : 'مقەبیلات',
-    'breakfast': locale === 'en' ? 'Breakfast' : locale === 'ar' ? 'فطور' : 'بەیانیان',
-  };
+  // Build category map for section headers
+  const categoryMap: { [key: string]: string } = {};
+  CATEGORIES.forEach((cat) => {
+    categoryMap[cat.value] =
+      locale === 'ar'
+        ? cat.label_arb
+        : locale === 'ku'
+        ? cat.label_ckb
+        : cat.label_en;
+  });
 
   // Memoized filtering to prevent unnecessary re-renders
   const filteredItems = useMemo(() => {
@@ -136,8 +158,8 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                 disabled={isPending}
                 className={`flex flex-col items-center gap-0.5 px-2 md:px-3 py-1.5 md:py-2 rounded-none transition-all duration-200 flex-shrink-0 border-b-2 disabled:opacity-60 ${
                   isSelected
-                    ? 'bg-transparent border-b-2 border-[#386641] text-[#386641]'
-                    : 'bg-transparent hover:border-b-2 hover:border-[#386641] hover:text-[#386641] text-gray-600 border-b-2 border-transparent'
+                    ? 'bg-transparent border-b-2 border-[#000000] text-[#000000]'
+                    : 'bg-transparent hover:border-b-2 hover:border-[#000000] hover:text-[#000000] text-gray-600 border-b-2 border-transparent'
                 }`}
                 style={{ scrollSnapAlign: 'center' }}
                 title={category.name}
@@ -161,7 +183,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                   placeholder="What would you like to eat?"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pr-10 pl-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#386641] focus:outline-none focus:ring-2 focus:ring-[#386641]/10 transition-all text-base placeholder:text-sm"
+                  className="w-full pr-10 pl-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
                 />
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               </>
@@ -173,7 +195,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                   placeholder="ماذا تريد أن تأكل؟"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#386641] focus:outline-none focus:ring-2 focus:ring-[#386641]/10 transition-all text-base placeholder:text-sm"
+                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
                 />
               </>
             ) : (
@@ -184,7 +206,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                   placeholder=" بەدوای چی دەگەڕێیت؟"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#386641] focus:outline-none focus:ring-2 focus:ring-[#386641]/10 transition-all text-base placeholder:text-sm"
+                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
                 />
               </>
             )}
@@ -208,20 +230,20 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                 <div className="mb-6 md:mb-8">
                   {/* Mobile: Stacked layout */}
                   <div className="md:hidden flex items-center justify-center gap-3">
-                    <div className="flex-1 h-0.5 bg-[#386641]"></div>
-                    <h2 className="text-base font-bold text-[#386641] text-center whitespace-nowrap px-2">
+                    <div className="flex-1 h-0.5 bg-[#000000]"></div>
+                    <h2 className="text-base font-bold text-[#000000] text-center whitespace-nowrap px-2">
                       {categoryMap[categoryId] || categoryId}
                     </h2>
-                    <div className="flex-1 h-0.5 bg-[#386641]"></div>
+                    <div className="flex-1 h-0.5 bg-[#000000]"></div>
                   </div>
                   
                   {/* Desktop: Line design */}
                   <div className="hidden md:flex items-center justify-center gap-4">
-                    <div className="flex-1 h-px bg-[#386641]"></div>
-                    <h2 className="text-lg font-bold text-[#386641] px-4 whitespace-nowrap">
+                    <div className="flex-1 h-px bg-[#000000]"></div>
+                    <h2 className="text-lg font-bold text-[#000000] px-4 whitespace-nowrap">
                       {categoryMap[categoryId] || categoryId}
                     </h2>
-                    <div className="flex-1 h-px bg-[#386641]"></div>
+                    <div className="flex-1 h-px bg-[#000000]"></div>
                   </div>
                 </div>
                 <MenuGrid items={categoryItems} />
@@ -232,10 +254,11 @@ export default function MenuSearch({ items }: MenuSearchProps) {
           <MenuGrid items={filteredItems} />
         ) : (
           <div className="text-center py-8 text-gray-500">
-            <p>{locale === 'en' ? 'No items found' : 'خواردنێک نەدۆزرایەوە'}</p>
+            <p>{locale === 'en' ? 'No items found' : 'هیچ کاڵایەک نیە ! '}</p>
           </div>
         )}
       </div>
     </>
   );
 }
+

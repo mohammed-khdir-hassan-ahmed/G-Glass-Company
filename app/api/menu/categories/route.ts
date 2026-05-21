@@ -1,29 +1,19 @@
-import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
-import { menuitem } from '@/src/db/schema';
+import { getCategoryValues, CATEGORIES } from '@/lib/categories';
 import { unstable_cache } from 'next/cache';
 
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql);
-
 /**
- * Get all unique categories
+ * Get all categories with metadata
  * Cached for 1 hour since categories change infrequently
- * Response time: ~50ms (with cache), ~300ms (cold start)
+ * Response time: ~10ms (with cache)
  */
-const getCategoriesFromDB = unstable_cache(
+const getCategoriesData = unstable_cache(
   async () => {
     try {
-      const categories = await db
-        .selectDistinct({ category: menuitem.category })
-        .from(menuitem)
-        .orderBy(menuitem.category);
-      
-      return categories.map(c => c.category);
+      return CATEGORIES;
     } catch (error) {
-      console.error('Error fetching categories:', error);
-      // Fallback to static categories if DB fails
-      return ['main', 'pizza', 'drinks', 'appetizers', 'breakfast'];
+      console.error('Error loading categories:', error);
+      // Fallback to default categories if error
+      return CATEGORIES;
     }
   },
   ['menu-categories'], // Cache key
@@ -35,11 +25,12 @@ const getCategoriesFromDB = unstable_cache(
 
 export async function GET() {
   try {
-    const categories = await getCategoriesFromDB();
+    const categories = await getCategoriesData();
     
     return Response.json({
       success: true,
       categories,
+      categoryValues: getCategoryValues(),
       count: categories.length,
       cached: true, // Indicates this came from cache
     }, {
@@ -54,7 +45,8 @@ export async function GET() {
       { 
         success: false,
         error: 'Failed to fetch categories',
-        categories: ['main', 'pizza', 'drinks', 'appetizers', 'breakfast'], // Fallback
+        categories: CATEGORIES,
+        categoryValues: getCategoryValues(),
       },
       { status: 500 }
     );

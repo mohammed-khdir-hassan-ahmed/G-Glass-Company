@@ -1,13 +1,11 @@
 'use client';
 
-import { Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { imageKitLoader, getResponsiveSizes } from '@/lib/imagekit-loader';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -49,7 +47,6 @@ export default function MenuGrid({ items }: MenuGridProps) {
   const locale = useLocale();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState(1);
   
   const getDisplayName = (item: MenuItem) => {
     if (locale === 'ar') {
@@ -72,12 +69,14 @@ export default function MenuGrid({ items }: MenuGridProps) {
   };
 
   const itemSizes = selectedItem ? normalizeSizes((selectedItem as any).sizes) : [];
-  const sizeRows = [];
-  for (let i = 0; i < itemSizes.length; i += 2) {
-    sizeRows.push(itemSizes.slice(i, i + 2));
-  }
+  const sizeRows = itemSizes.map(size => [size]); // Each size in its own row
 
   const isSoldOut = selectedItem ? ((selectedItem as any).is_sold_out || false) : false;
+
+  const closeItemDialog = () => {
+    setSelectedItem(null);
+    setSelectedSize(null);
+  };
 
   const getSoldOutText = () => {
     if (locale === 'ar') return 'نفد';
@@ -102,21 +101,22 @@ export default function MenuGrid({ items }: MenuGridProps) {
       {selectedItem && (
         <Dialog
           open={true}
-          onOpenChange={() => {
-            setSelectedItem(null);
-            setSelectedSize(null);
-            setQuantity(1);
-          }}
+          onOpenChange={closeItemDialog}
         >
-          <DialogContent className="max-h-[85vh] overflow-y-auto max-w-xs md:max-w-sm" dir="ltr">
+          <DialogContent
+            className="w-[calc(100%-1rem)] max-w-[95vw] overflow-hidden rounded-3xl border-0 bg-white p-0 shadow-2xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl"
+            dir="ltr"
+            showCloseButton={false}
+          >
             <DialogTitle className="sr-only">
               {getDisplayName(selectedItem)}
             </DialogTitle>
 
-            <div className="rounded-lg overflow-hidden mb-4 -mt-6 -mx-6 bg-gray-100 relative">
+            <div className="grid max-h-[90vh] overflow-hidden md:h-auto md:grid-cols-2 gap-0">
+            <div className="relative overflow-hidden bg-white flex items-center justify-center p-6 sm:p-8 md:p-8">
               {isSoldOut && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
-                  <span className="text-white font-bold text-lg md:text-xl bg-red-600 px-4 py-2 rounded-lg shadow-lg">
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+                  <span className="text-white font-extrabold text-xl md:text-2xl lg:text-3xl bg-gradient-to-r from-red-600 to-red-700 px-6 py-3 rounded-lg shadow-2xl">
                     {getSoldOutText()}
                   </span>
                 </div>
@@ -126,50 +126,52 @@ export default function MenuGrid({ items }: MenuGridProps) {
                 src={selectedItem.image_url}
                 alt={getDisplayName(selectedItem)}
                 width={500}
-                height={400}
+                height={450}
                 sizes={getResponsiveSizes('detail')}
                 priority
                 placeholder="blur"
-                blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 400'%3E%3Crect fill='%23f3f4f6' width='500' height='400'/%3E%3C/svg%3E"
-                quality={80}
-                className={`w-full h-60 md:h-72 object-cover ${isSoldOut ? 'grayscale' : ''}`}
+                blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 450'%3E%3Crect fill='%23ffffff' width='500' height='450'/%3E%3C/svg%3E"
+                quality={90}
+                className={`h-auto w-full max-w-full object-contain ${isSoldOut ? 'grayscale opacity-90' : ''}`}
               />
             </div>
 
-            <div className="mb-4">
-              <h2 className={`text-lg md:text-xl font-bold text-gray-900 ${locale === 'ar' ? 'text-right' : ''} ${isSoldOut ? 'line-through text-gray-500' : ''}`}>
+            <div className="flex min-h-0 flex-col md:min-h-auto">
+            <div className="flex-1 px-5 py-5 sm:px-7 sm:py-6 md:px-8 md:py-8 md:min-h-0 md:overflow-y-auto">
+            <div className="mb-5">
+              <h2 className={`text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl md:text-3xl leading-tight ${locale === 'ar' ? 'text-right' : ''} ${isSoldOut ? 'line-through text-gray-400' : ''}`}>
                 {getDisplayName(selectedItem)}
               </h2>
               {isSoldOut && (
-                <p className="text-red-600 font-bold text-sm mt-2">
+                <p className="text-red-600 font-semibold text-sm mt-2">
                   {getSoldOutText()}
                 </p>
               )}
             </div>
 
             {getDescription(selectedItem) && (
-              <div className="mb-4 text-sm text-gray-600">
+              <div className="mb-6 text-sm leading-6 text-gray-600 sm:text-base">
                 {getDescription(selectedItem)}
               </div>
             )}
 
             {/* Size Selection in Modal */}
             {itemSizes.length > 0 && (
-              <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="rounded-xl bg-gray-50 p-4 sm:p-5 border border-gray-100">
+                <label className="mb-3 block text-sm font-semibold text-gray-700 sm:text-base">
                   سایز
                 </label>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   {sizeRows.map((row, rowIdx) => (
                     <div key={rowIdx} className="flex gap-2">
                       {row.map((size: string) => (
                         <button
                           key={size}
                           onClick={() => setSelectedSize(selectedSize === size ? null : size)}
-                          className={`flex-1 px-3 py-2 text-sm font-bold rounded-md transition-all ${
+                          className={`flex-1 rounded-lg px-4 py-3 text-sm font-semibold transition-all duration-200 ${
                             selectedSize === size
-                              ? 'bg-[#386641] text-white'
-                              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                              ? 'bg-gray-900 text-white shadow-md'
+                              : 'bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50'
                           }`}
                         >
                           {size}
@@ -180,35 +182,18 @@ export default function MenuGrid({ items }: MenuGridProps) {
                 </div>
               </div>
             )}
-
-            <div className="flex items-center justify-center gap-2 bg-gray-100 rounded-lg p-2 mb-3 w-full mx-auto">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="hover:bg-gray-200 rounded p-2 transition"
-                style={{ minWidth: 40, minHeight: 40 }}
-              >
-                <Minus className="w-6 h-6 md:w-7 md:h-7" />
-              </button>
-              <span className="text-xl md:text-2xl font-bold w-10 text-center">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="hover:bg-gray-200 rounded p-2 transition"
-                style={{ minWidth: 40, minHeight: 40 }}
-              >
-                <Plus className="w-6 h-6 md:w-7 md:h-7" />
-              </button>
             </div>
 
+            <div className="border-t border-gray-200 bg-white px-5 py-4 sm:px-7 sm:py-5 md:px-8 md:py-5">
             <Button 
-              onClick={() => {
-                setSelectedItem(null);
-                setSelectedSize(null);
-                setQuantity(1);
-              }}
-              className="w-full bg-[#386641] hover:bg-[#2a4d30] text-white py-3 font-bold"
+              onClick={closeItemDialog}
+              className="h-11 w-full bg-gray-900 text-sm font-semibold text-white hover:bg-gray-950 shadow-md hover:shadow-lg transition-all duration-200 sm:h-12 sm:text-base rounded-lg"
             >
               {locale === 'en' ? 'Close' : 'داخستن'}
             </Button>
+            </div>
+            </div>
+            </div>
           </DialogContent>
         </Dialog>
       )}

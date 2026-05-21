@@ -7,8 +7,8 @@ import { locales } from '@/i18n/request';
 import LocaleSetup from './LocaleSetup';
 
 export const metadata: Metadata = {
-  title: "Sha-caffe",
-  description: "Sha -caffe",
+  title: "G-Glass",
+  description: "Global Glass Company - Premium Glass Products & Solutions",
 };
 
 export function generateStaticParams() {

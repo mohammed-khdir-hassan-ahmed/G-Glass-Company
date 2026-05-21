@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Info, Phone, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,10 +12,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import CompanyShowcase from '@/components/CompanyShowcase';
 import { useLocale } from 'next-intl';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const locale = useLocale();
 
   return (
@@ -24,7 +26,7 @@ export default function Navbar() {
         {/* Left side - Logo */}
         <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
           <Image
-            src="/image/logo.jpg"
+            src="/image/image.png"
             alt="Logo"
             width={100}
             height={100}
@@ -36,38 +38,51 @@ export default function Navbar() {
         <div className="flex gap-2 items-center">
           {/* Language Switcher */}
           <LanguageSwitcher />
+          {/* About Button */}
+          <Button
+            className="cursor-pointer w-10 h-10 aspect-square md:w-10 md:h-10 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-md flex items-center justify-center flex-shrink-0"
+            onClick={() => setIsCompanyOpen(true)}
+            title={locale === 'ar' ? 'حول الشركة' : locale === 'ku' ? 'دەربارەی کۆمپانیا' : 'About Company'}
+          >
+            <Info className="w-6 h-6 md:w-5 md:h-5" />
+          </Button>
           {/* Location Button */}
           <Button
-            className="w-10 h-10 aspect-square md:w-10 md:h-10 bg-[#386641] hover:bg-[#2a4d30] text-white rounded-md flex items-center justify-center flex-shrink-0"
-            onClick={() => setIsOpen(true)}
+            className="cursor-pointer w-10 h-10 aspect-square md:w-10 md:h-10 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-md flex items-center justify-center flex-shrink-0"
+            onClick={() => setIsLocationOpen(true)}
           >
             <MapPin className="w-6 h-6 md:w-5 md:h-5" />
           </Button>
         </div>
       </nav>
 
-      {/* Modal */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      {/* Company Showcase Modal */}
+      <CompanyShowcase isOpen={isCompanyOpen} onClose={() => setIsCompanyOpen(false)} />
+
+      {/* Location Modal */}
+      <Dialog open={isLocationOpen} onOpenChange={setIsLocationOpen}>
         <DialogContent 
           className="w-[80vw]  max-w-sm md:max-w-md max-h-[85vh] overflow-y-auto p-3 md:p-4"
           dir={locale === 'en' ? 'ltr' : 'rtl'}
         >
-          <DialogTitle className="sr-only">
-            {locale === 'en' ? 'Location Details' : locale === 'ar' ? 'تفاصيل الموقع' : 'تفصيلاتی ناونیشان'}
-          </DialogTitle>
+          <DialogHeader>
+            <DialogTitle className="sr-only">
+              {locale === 'en' ? 'Location Details' : locale === 'ar' ? 'تفاصيل الموقع' : 'تفصيلاتی ناونیشان'}
+            </DialogTitle>
+          </DialogHeader>
 
             {/* Logo & Name */}
             <div className="flex flex-col items-center gap-2 mb-3">
               <div className="relative h-20 w-20 md:h-20 md:w-20">
                 <Image
-                  src="/image/logo.jpg"
+                  src="/image/image.png"
                   alt="Logo"
                   fill
                   className="object-contain"
                 />
               </div>
-              <span className="font-bold text-lg md:text-xl text-[#386641] mt-1">
-                {locale === 'en' ? 'SHA Cafe' : locale === 'ar' ? 'شا كافيه' : 'شا کافێ'}
+              <span className="font-bold text-lg md:text-xl text-[#000000] mt-1">
+                {locale === 'en' ? ' Global Glass Company' : locale === 'ar' ? 'شركة زجاج العالمية ' : ' کۆمپانیای جیهانی شوشە'}
               </span>
             </div>
 
@@ -202,8 +217,8 @@ export default function Navbar() {
 
             {/* Close Button */}
             <Button
-              onClick={() => setIsOpen(false)}
-              className="w-full mt-3 bg-[#386641] hover:bg-[#2a4d30] text-white rounded-lg py-2 md:py-3 font-semibold text-sm"
+              onClick={() => setIsLocationOpen(false)}
+              className="w-full mt-3 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-lg py-2 md:py-3 font-semibold text-sm"
             >
               {locale === 'en' ? 'Close' : locale === 'ar' ? 'إغلاق' : 'داخستن'}
             </Button>
@@ -215,3 +230,4 @@ export default function Navbar() {
     </>
   );
 }
+

@@ -17,7 +17,7 @@ export default function Loading() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <img
-        src="/image/logo.jpg"
+    src="/image/image.png"
         alt="Logo"
         className="w-24 h-24 rounded-xl animate-spin-smooth"
       />

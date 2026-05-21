@@ -29,7 +29,7 @@ export default function ScrollButtons() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed right-4 md:right-8 bottom-20 md:bottom-24 w-12 h-12 md:w-14 md:h-14 bg-[#386641] hover:bg-[#2a4d30] text-white rounded-lg flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-50"
+          className="fixed right-4 md:right-8 bottom-20 md:bottom-24 w-12 h-12 md:w-14 md:h-14 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-lg flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-50"
           title="بۆ سەرەوە"
           aria-label="Scroll to top"
         >
@@ -39,3 +39,4 @@ export default function ScrollButtons() {
     </>
   );
 }
+

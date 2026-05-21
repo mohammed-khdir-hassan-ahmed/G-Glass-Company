@@ -22,7 +22,7 @@ export default function Celebration() {
           particleCount: 120,
           spread: 120,
           origin: { x: 0.5, y: -0.1 },
-          colors: ['#386641', '#FFD700', '#FF6B6B', '#4ECDC4', '#FF1493', '#95E1D3'],
+          colors: ['#000000', '#FFD700', '#FF6B6B', '#4ECDC4', '#FF1493', '#95E1D3'],
           gravity: 0.8,
           scalar: 1.2,
           ticks: 300,
@@ -34,7 +34,7 @@ export default function Celebration() {
             particleCount: 200,
             spread: 80,
             origin: { x: 0.1, y: 1.1 },
-            colors: ['#386641', '#FF6B6B', '#4ECDC4'],
+            colors: ['#000000', '#FF6B6B', '#4ECDC4'],
             gravity: -0.3,
             scalar: 1,
             ticks: 260,
@@ -60,7 +60,7 @@ export default function Celebration() {
             particleCount: 200,
             spread: 90,
             origin: { x: 0.5, y: 0.5 },
-            colors: ['#386641', '#FFD700', '#4ECDC4', '#FF1493'],
+            colors: ['#000000', '#FFD700', '#4ECDC4', '#FF1493'],
             gravity: 0.5,
             scalar: 0.5,
             ticks: 280,
@@ -76,3 +76,4 @@ export default function Celebration() {
 
   return null;
 }
+
