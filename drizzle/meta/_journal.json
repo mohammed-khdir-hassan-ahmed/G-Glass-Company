@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1776284708289,
+      "tag": "0000_famous_molten_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776284771395,
+      "tag": "0001_add_language_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776374256975,
+      "tag": "0002_add-name-arb-to-menuitem",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779097190096,
+      "tag": "0003_medical_tombstone",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779102246957,
+      "tag": "0004_aspiring_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779102855440,
+      "tag": "0005_many_goblin_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779131642130,
+      "tag": "0006_white_forge",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1779131669057,
+      "tag": "0007_cuddly_adam_warlock",
+      "breakpoints": true
+    }
+  ]
+}

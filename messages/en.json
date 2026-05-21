@@ -1,0 +1,18 @@
+{
+  "common": {
+    "location": "Location",
+    "language": "Language",
+    "english": "English",
+    "kurdish": "کوردی"
+  },
+  "menu": {
+    "title": "SHA Cafe",
+    "noItems": "No items available",
+    "error": "Error loading menu items"
+  },
+  "social": {
+    "title": "Follow Us:",
+    "facebook": "Facebook",
+    "tiktok": "TikTok"
+  }
+}
