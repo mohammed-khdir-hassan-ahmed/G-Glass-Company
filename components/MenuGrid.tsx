@@ -43,6 +43,7 @@ function normalizeSizes(value: unknown): string[] {
   return [];
 }
 
+<<<<<<< HEAD
 function normalizeColors(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.filter(color => typeof color === 'string' && color.trim() !== '');
@@ -60,6 +61,8 @@ function normalizeColors(value: unknown): string[] {
   return [];
 }
 
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 export default function MenuGrid({ items }: MenuGridProps) {
   const locale = useLocale();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
@@ -86,7 +89,10 @@ export default function MenuGrid({ items }: MenuGridProps) {
   };
 
   const itemSizes = selectedItem ? normalizeSizes((selectedItem as any).sizes) : [];
+<<<<<<< HEAD
   const itemColors = selectedItem ? normalizeColors((selectedItem as any).colors) : [];
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
   const sizeRows = itemSizes.map(size => [size]); // Each size in its own row
 
   const isSoldOut = selectedItem ? ((selectedItem as any).is_sold_out || false) : false;
@@ -175,7 +181,11 @@ export default function MenuGrid({ items }: MenuGridProps) {
 
             {/* Size Selection in Modal */}
             {itemSizes.length > 0 && (
+<<<<<<< HEAD
               <div className="rounded-xl bg-gray-50 p-4 sm:p-5 border border-gray-100 mb-4">
+=======
+              <div className="rounded-xl bg-gray-50 p-4 sm:p-5 border border-gray-100">
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
                 <label className="mb-3 block text-sm font-semibold text-gray-700 sm:text-base">
                   سایز
                 </label>
@@ -200,6 +210,7 @@ export default function MenuGrid({ items }: MenuGridProps) {
                 </div>
               </div>
             )}
+<<<<<<< HEAD
 
             {/* Colors Display */}
             {itemColors.length > 0 && (
@@ -226,6 +237,8 @@ export default function MenuGrid({ items }: MenuGridProps) {
                 </div>
               </div>
             )}
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
             </div>
 
             <div className="border-t border-gray-200 bg-white px-5 py-4 sm:px-7 sm:py-5 md:px-8 md:py-5">

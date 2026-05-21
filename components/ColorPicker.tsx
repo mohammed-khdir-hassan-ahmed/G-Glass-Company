@@ -10,10 +10,13 @@ interface ColorPickerProps {
 }
 
 const PRESET_COLORS = [
+<<<<<<< HEAD
   { name: 'Metallic Grey', value: '#6B7280' },
   { name: 'Champagne', value: '#F7E7CE' },
   { name: 'Gold', value: '#FFD700' },
   { name: 'شفاف ڕوون', value: '#E8E8E8' },
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
   { name: 'سور', value: '#EF4444' },
   { name: 'سەوز', value: '#10B981' },
   { name: 'شین', value: '#3B82F6' },
@@ -22,6 +25,11 @@ const PRESET_COLORS = [
   { name: 'سپی', value: '#FFFFFF' },
   { name: 'ڕەش', value: '#000000' },
   { name: 'مۆر', value: '#A855F7' },
+<<<<<<< HEAD
+=======
+  { name: 'ڕەنگی خۆردا', value: '#F97316' },
+  { name: 'ڕۆسا', value: '#EC4899' },
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 ];
 
 export default function ColorPicker({ colors, onChange, maxColors = 6 }: ColorPickerProps) {
@@ -60,9 +68,13 @@ export default function ColorPicker({ colors, onChange, maxColors = 6 }: ColorPi
               className="relative group"
             >
               <div
+<<<<<<< HEAD
                 className={`w-12 h-12 rounded-full border-2 shadow-md cursor-pointer hover:border-gray-500 transition ${
                   color === '#FFFFFF' ? 'border-4 border-gray-800' : 'border-gray-300'
                 }`}
+=======
+                className="w-12 h-12 rounded-full border-2 border-gray-300 shadow-md cursor-pointer hover:border-gray-500 transition"
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
                 style={{ backgroundColor: color }}
                 title={color}
               />

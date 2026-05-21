@@ -1,7 +1,11 @@
 'use client';
 
 import { useState, useTransition, useMemo } from 'react';
+<<<<<<< HEAD
 import { Search, Home, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2, Zap } from 'lucide-react';
+=======
+import { Search, Home, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2 } from 'lucide-react';
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 import { Input } from '@/components/ui/input';
 import MenuGrid from '@/components/MenuGrid';
 import { useLocale } from 'next-intl';
@@ -22,7 +26,10 @@ const ICON_COMPONENTS: Record<string, any> = {
   'Circle': Circle,
   'Diamond': Diamond,
   'CheckCircle2': CheckCircle2,
+<<<<<<< HEAD
   'Zap': Zap,
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 };
 
 // Build aliases from CATEGORIES config

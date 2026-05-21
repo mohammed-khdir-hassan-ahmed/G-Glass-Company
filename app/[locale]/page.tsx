@@ -9,7 +9,11 @@ import ScrollButtons from '@/components/ScrollButtons';
 import Navbar from '@/components/Navbar';
 import Loading from './loading';
 import { CATEGORIES } from '@/lib/categories';
+<<<<<<< HEAD
 import { Home as HomeIcon, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2, Zap } from 'lucide-react';
+=======
+import { Home as HomeIcon, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2 } from 'lucide-react';
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 import { useLocale } from 'next-intl';
 
 // Map icon names to actual Lucide components
@@ -22,7 +26,10 @@ const ICON_COMPONENTS: Record<string, any> = {
   'Circle': Circle,
   'Diamond': Diamond,
   'CheckCircle2': CheckCircle2,
+<<<<<<< HEAD
   'Zap': Zap,
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 };
 
 function EmptyStateWithCategories({ locale }: { locale: string }) {
@@ -39,7 +46,11 @@ function EmptyStateWithCategories({ locale }: { locale: string }) {
 
   return (
     <div className="mt-3">
+<<<<<<< HEAD
       <h1 className="text-xl md:text-4xl font-bold text-[#000000] text-center mt-6 md:mt-0">
+=======
+      <h1 className="text-3xl md:text-4xl font-bold text-[#000000] text-center mt-6 md:mt-0">
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
         {locale?.trim() === 'en' ? 'Global Glass world ' : locale?.trim() === 'ar' ? 'عالم الزجاج العالمي' : '  کۆمپانیای جیهانی شوشە  '}
       </h1>
       
@@ -94,7 +105,11 @@ async function MenuList({ locale }: { locale: string }) {
 
     return (
       <div className="mt-3">
+<<<<<<< HEAD
         <h1 className="text-xl md:text-4xl font-bold text-[#000000] text-center mt-6 md:mt-0">
+=======
+        <h1 className="text-3xl md:text-4xl font-bold text-[#000000] text-center mt-6 md:mt-0">
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
           {locale?.trim() === 'en' ? 'Global Glass world ' : locale?.trim() === 'ar' ? 'عالم الزجاج العالمي' : '  کۆمپانیای جیهانی شوشە  '}
         </h1>
         <MenuSearch items={items} />

@@ -86,6 +86,7 @@ export const CATEGORIES: Category[] = [
     icon: 'CheckCircle2',
     color: 'bg-red-500',
   },
+<<<<<<< HEAD
   {
     id: 'tools',
     value: 'tools',
@@ -95,6 +96,8 @@ export const CATEGORIES: Category[] = [
     icon: 'Zap',
     color: 'bg-yellow-500',
   },
+=======
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
 ];
 
 /**

@@ -288,13 +288,21 @@ export default function DashboardPage() {
 
   const normalizeColors = (value: unknown): string[] => {
     if (Array.isArray(value)) {
+<<<<<<< HEAD
       return value.filter(color => typeof color === 'string' && color.trim() !== '');
+=======
+      return value.filter(color => typeof color === 'string' && color.match(/^#[0-9A-F]{6}$/i));
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
     }
     if (typeof value === 'string') {
       try {
         const parsed = JSON.parse(value);
         if (Array.isArray(parsed)) {
+<<<<<<< HEAD
           return parsed.filter(color => typeof color === 'string' && color.trim() !== '');
+=======
+          return parsed.filter(color => typeof color === 'string' && color.match(/^#[0-9A-F]{6}$/i));
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
         }
       } catch {
         return [];
@@ -924,7 +932,11 @@ export default function DashboardPage() {
             <ColorPicker 
               colors={formData.colors} 
               onChange={(newColors) => setFormData((prev) => ({ ...prev, colors: newColors }))}
+<<<<<<< HEAD
               maxColors={6}
+=======
+              maxColors={4}
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
             />
 
             <div>
@@ -1032,7 +1044,11 @@ export default function DashboardPage() {
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
+<<<<<<< HEAD
             <DialogTitle>ڕەشکردنەوە</DialogTitle>
+=======
+            
+>>>>>>> 37074e11db301b9b15c9bc4e2d3e113fa4e5e290
             <DialogDescription className="text-center">
              ئایە دڵنیایت لە ڕەشکردنەوەی ئەم؟ 
             </DialogDescription>
