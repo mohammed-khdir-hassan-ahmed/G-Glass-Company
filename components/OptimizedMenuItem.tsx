@@ -185,7 +185,7 @@ export default function OptimizedMenuItem({
         aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <svg
-          className={`w-5 h-5 md:w-6 md:h-6 transition-all ${isFavorite ? 'fill-red-500' : 'fill-none text-gray-400'}`}
+          className={`w-5 h-5 md:w-6 md:h-6 ${isFavorite ? 'fill-red-500' : 'fill-none text-gray-400'}`}
           stroke={isFavorite ? 'none' : 'currentColor'}
           viewBox="0 0 24 24"
         >
