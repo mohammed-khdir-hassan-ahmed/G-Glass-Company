@@ -175,9 +175,10 @@ export default function OptimizedMenuItem({
         onTouchEnd={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          setIsFavorite(!isFavorite);
         }}
         animate={isFavorite ? { scale: [1, 1.3, 1], rotate: [0, 360] } : {}}
-        transition={{ duration: 0.1, ease: 'easeInOut' }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
         className="absolute lg:hidden top-2 z-20 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 pointer-events-auto"
         style={{
           [isRTL ? 'left' : 'right']: '0.5rem'
