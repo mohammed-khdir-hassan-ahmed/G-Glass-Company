@@ -4,8 +4,19 @@ import { ImageLoaderProps } from 'next/image';
 const IMAGEKIT_URL_ENDPOINT = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '';
 
 export const imageKitLoader = ({ src, width, quality }: ImageLoaderProps): string => {
+  // Handle undefined or empty src
+  if (!src || typeof src !== 'string') {
+    console.error('Invalid src passed to imageKitLoader:', src);
+    return '';
+  }
+
   // Return the path as-is if it's already a full URL from ImageKit
   if (src.startsWith('http')) {
+    return src;
+  }
+
+  // If no IMAGEKIT_URL_ENDPOINT configured, return src as-is
+  if (!IMAGEKIT_URL_ENDPOINT) {
     return src;
   }
 
