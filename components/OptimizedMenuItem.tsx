@@ -113,7 +113,7 @@ export default function OptimizedMenuItem({
   const itemSizes = normalizeSizes((item as any).sizes);
   const itemColors = normalizeColors((item as any).colors);
   
-  // Alternate animation direction: even items from left, odd from right
+ 
   const isFromLeft = index % 2 === 0;
   const initialX = isFromLeft ? -50 : 50;
 
