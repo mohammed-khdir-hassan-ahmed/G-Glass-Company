@@ -24,7 +24,7 @@ export default function Navbar() {
     <>
       <nav className="flex items-center justify-between px-4 md:px-12 py-1 md:py-0.5 border-b-2 border-gray-100 top-0 z-40 bg-white gap-6 sticky">
         {/* Left side - Logo */}
-        <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
+        <div className="w-[65px] h-[65px] md:w-16 md:h-16 flex-shrink-0">
           <Image
             src="/image/image.jpeg"
             alt="Logo"
@@ -61,7 +61,7 @@ export default function Navbar() {
 
       {/* Location Modal */}
       <Dialog open={isLocationOpen} onOpenChange={setIsLocationOpen}>
-        <DialogContent 
+        <DialogContent
           className="w-[90vw] max-w-sm md:max-w-xl lg:max-w-3xl max-h-[90vh] overflow-y-auto p-2 md:p-3 lg:p-4 bg-gradient-to-br from-white via-gray-50 to-white rounded-2xl shadow-2xl border border-gray-200"
           dir={locale === 'en' ? 'ltr' : 'rtl'}
         >
@@ -71,32 +71,32 @@ export default function Navbar() {
             </DialogTitle>
           </DialogHeader>
 
-            {/* Logo & Name */}
-            <div className="flex flex-col items-center gap-2 mb-3.5 lg:mb-4 pb-2 border-b-2 border-gray-100">
-              <div className="relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 p-1.5 flex items-center justify-center">
-                <Image
-                  src="/image/image.jpeg"
-                  alt="Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="font-bold text-base md:text-lg lg:text-xl text-gray-800 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                {locale === 'en' ? ' Global Glass Company' : locale === 'ar' ? 'شركة زجاج العالمية ' : ' کۆمپانیای جیهانی شوشە'}
-              </span>
+          {/* Logo & Name */}
+          <div className="flex flex-col items-center gap-2 mb-3.5 lg:mb-4 pb-2 border-b-2 border-gray-100">
+            <div className="relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 p-1.5 flex items-center justify-center">
+              <Image
+                src="/image/image.jpeg"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
             </div>
+            <span className="font-bold text-base md:text-lg lg:text-xl text-gray-800 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              {locale === 'en' ? ' Global Glass Company' : locale === 'ar' ? 'شركة زجاج العالمية ' : ' کۆمپانیای جیهانی شوشە'}
+            </span>
+          </div>
 
           {/* Content */}
           <div className="space-y-2 md:space-y-2.5 lg:space-y-3 grid md:grid-cols-2 gap-2 md:gap-2.5 lg:gap-3">
             {/* Social Media Card */}
             <div className="bg-gradient-to-br from-pink-50 via-pink-50 to-rose-50 rounded-xl px-2 md:px-3 py-2 md:py-2.5 border-1.5 border-pink-300 shadow-sm hover:shadow-md transition-all md:col-span-2">
-              
+
               <div className="flex items-center gap-1.5 mb-1.5">
                 <div className="w-0.5 h-3 bg-gradient-to-b from-pink-400 to-rose-400 rounded-full"></div>
                 <p className='font-bold text-[10px] md:text-xs text-pink-900'>
                   {locale === 'en' ? 'Our Social Media:' : locale === 'ar' ? 'وسائط التواصل الاجتماعي:' : 'سۆشیاڵ میدیاکانمان:'}
                 </p>
-               
+
               </div>
 
               {/* Social Links */}
@@ -115,9 +115,9 @@ export default function Navbar() {
                     viewBox="0 0 24 24"
                     fill="white"
                   >
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
-            <span className="text-[8px] md:text-[9px] font-bold text-white drop-shadow">Facebook</span>
+                  <span className="text-[8px] md:text-[9px] font-bold text-white drop-shadow">Facebook</span>
                 </a>
 
                 {/* WhatsApp */}
@@ -134,7 +134,7 @@ export default function Navbar() {
                     viewBox="0 0 24 24"
                     fill="white"
                   >
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l6.06-1.92C9.5 21.56 10.7 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.2 0-2.35-.3-3.35-.84l-.24-.14-2.48.79.81-2.43-.15-.24C4.34 14.35 4 13.2 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.14-7.28c-.23-.12-1.37-.67-1.58-.75-.22-.08-.37-.12-.52.12-.15.23-.58.75-.71.9-.13.15-.27.17-.5.04-.23-.12-1.02-.38-1.93-1.2-.72-.65-1.2-1.44-1.34-1.67-.13-.23-.01-.35.1-.46.1-.1.23-.27.34-.41.1-.14.14-.23.2-.38.08-.15.04-.27-.02-.38-.06-.12-.52-1.28-.72-1.74-.18-.46-.38-.39-.52-.4h-.45c-.15 0-.4.06-.61.29-.22.23-.84.83-.84 2.02 0 1.19.87 2.34 1 2.5.12.15 1.74 2.66 4.22 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.49-.61 1.7-1.2.2-.59.2-1.1.15-1.2-.06-.1-.22-.16-.46-.28z"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l6.06-1.92C9.5 21.56 10.7 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.2 0-2.35-.3-3.35-.84l-.24-.14-2.48.79.81-2.43-.15-.24C4.34 14.35 4 13.2 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.14-7.28c-.23-.12-1.37-.67-1.58-.75-.22-.08-.37-.12-.52.12-.15.23-.58.75-.71.9-.13.15-.27.17-.5.04-.23-.12-1.02-.38-1.93-1.2-.72-.65-1.2-1.44-1.34-1.67-.13-.23-.01-.35.1-.46.1-.1.23-.27.34-.41.1-.14.14-.23.2-.38.08-.15.04-.27-.02-.38-.06-.12-.52-1.28-.72-1.74-.18-.46-.38-.39-.52-.4h-.45c-.15 0-.4.06-.61.29-.22.23-.84.83-.84 2.02 0 1.19.87 2.34 1 2.5.12.15 1.74 2.66 4.22 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.49-.61 1.7-1.2.2-.59.2-1.1.15-1.2-.06-.1-.22-.16-.46-.28z" />
                   </svg>
                   <span className="text-[8px] md:text-[9px] font-bold text-white drop-shadow">WhatsApp</span>
                 </a>
@@ -166,7 +166,7 @@ export default function Navbar() {
 
             {/* Phone Numbers Card */}
             <div className="bg-gradient-to-br from-blue-50 via-blue-50 to-cyan-50 rounded-xl px-2 md:px-3 py-2 md:py-2.5 border-1.5 border-blue-300 shadow-sm hover:shadow-md transition-all">
-              
+
               <div className="flex items-center gap-1.5 mb-1.5">
                 <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full p-1.5 shadow-sm">
                   <Phone size={12} className="text-white" />
@@ -180,10 +180,10 @@ export default function Navbar() {
                 className="text-[10px] md:text-xs font-bold text-blue-700 hover:text-blue-600 transition break-all text-left hover:underline font-medium"
                 dir={locale === 'en' ? 'ltr' : 'rtl'}
               >
-               07504362141 - 07701409997
+                07504362141 - 07701409997
 
               </button>
-              
+
             </div>
 
             {/* Opening Hours Card */}
@@ -199,7 +199,7 @@ export default function Navbar() {
               <p className="text-[10px] md:text-xs font-bold text-amber-800" dir={locale === 'en' ? 'ltr' : 'rtl'}>
                 {locale === 'en' ? '08:00 AM - 05:00 PM' : locale === 'ar' ? '08:00 صباحاً - 05:00 مغریب' : '08:00 بەیانی  - 05:00 ئێوارە'}
               </p>
-              
+
             </div>
 
             {/* Location Card */}
@@ -225,7 +225,7 @@ export default function Navbar() {
               {locale === 'en' ? 'Close' : locale === 'ar' ? 'إغلاق' : 'داخستن'}
             </Button>
 
-           
+
           </div>
         </DialogContent>
       </Dialog>

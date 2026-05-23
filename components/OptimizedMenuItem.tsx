@@ -83,7 +83,7 @@ export default function OptimizedMenuItem({
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  
+
   // Get the appropriate name based on locale with proper fallbacks
   const getDisplayName = () => {
     if (locale === 'ar') {
@@ -112,8 +112,8 @@ export default function OptimizedMenuItem({
   const description = getDescription();
   const itemSizes = normalizeSizes((item as any).sizes);
   const itemColors = normalizeColors((item as any).colors);
-  
- 
+
+
   const isFromLeft = index % 2 === 0;
   const initialX = isFromLeft ? -50 : 50;
 
@@ -161,9 +161,8 @@ export default function OptimizedMenuItem({
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, ease: 'easeOut', delay: (index % 4) * 0.1 }}
       dir={isRTL ? 'rtl' : 'ltr'}
-      className={`relative overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-2xl bg-white flex lg:flex-col items-center lg:items-stretch w-full lg:w-auto h-40 md:h-44 lg:h-full active:shadow-md ${
-        isSoldOut ? 'opacity-60' : ''
-      }`}
+      className={`relative overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-2xl bg-white flex lg:flex-col items-center lg:items-stretch w-full lg:w-auto h-40 md:h-44 lg:h-full active:shadow-md ${isSoldOut ? 'opacity-60' : ''
+        }`}
     >
       {/* Favorite Button - Top Right Mobile */}
       <motion.button
@@ -200,9 +199,8 @@ export default function OptimizedMenuItem({
       </motion.button>
 
       {/* Image Section - RTL: Right Side, LTR: Left Side */}
-      <div className={`relative w-1/2 lg:w-full h-full lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-100 to-gray-50 transition-opacity duration-300 ${isRTL ? 'order-2 lg:order-1' : 'order-1'} ${
-        imageLoaded ? 'opacity-100' : 'opacity-90'
-      }`}>
+      <div className={`relative w-1/2 lg:w-full h-full lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-100 to-gray-50 transition-opacity duration-300 ${isRTL ? 'order-2 lg:order-1' : 'order-1'} ${imageLoaded ? 'opacity-100' : 'opacity-90'
+        }`}>
         {isSoldOut && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
             <span className="text-white font-bold text-sm md:text-base bg-red-600 px-3 py-1.5 rounded-lg shadow-lg">

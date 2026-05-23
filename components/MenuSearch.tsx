@@ -53,11 +53,11 @@ export default function MenuSearch({ items }: MenuSearchProps) {
   const locale = useLocale();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  
+
   // useTransition for non-blocking category filtering
   // Shows loading state without blocking user input
   const [isPending, startTransition] = useTransition();
-  
+
   const getDisplayName = (item: MenuItem) => {
     // Show language-specific name with proper fallbacks
     if (locale === 'ar') {
@@ -79,8 +79,8 @@ export default function MenuSearch({ items }: MenuSearchProps) {
       locale === 'ar'
         ? cat.label_arb
         : locale === 'ku'
-        ? cat.label_ckb
-        : cat.label_en,
+          ? cat.label_ckb
+          : cat.label_en,
     icon: ICON_COMPONENTS[cat.icon] || Home,
   }));
 
@@ -91,8 +91,8 @@ export default function MenuSearch({ items }: MenuSearchProps) {
       locale === 'ar'
         ? cat.label_arb
         : locale === 'ku'
-        ? cat.label_ckb
-        : cat.label_en;
+          ? cat.label_ckb
+          : cat.label_en;
   });
 
   // Memoized filtering to prevent unnecessary re-renders
@@ -100,9 +100,9 @@ export default function MenuSearch({ items }: MenuSearchProps) {
     let result = items.filter(item => {
       const displayName = getDisplayName(item);
       const matchesSearch = displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           (item.name_en?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
-                           (item.name_ckb?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
-                           ((item as any).name_arb?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+        (item.name_en?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
+        (item.name_ckb?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
+        ((item as any).name_arb?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
       const matchesCategory = selectedCategory === 'all' || normalizeCategory(item.category) === selectedCategory;
       return matchesSearch && matchesCategory;
     });
@@ -136,9 +136,9 @@ export default function MenuSearch({ items }: MenuSearchProps) {
       {/* Categories and Search Section */}
       <div className="flex flex-col gap-3 items-center mt-6 mb-4 px-1 md:px-0 w-full">
         {/* Categories with loading indicator */}
-        <div 
-          className="flex gap-1 md:gap-3 overflow-x-auto overflow-y-hidden w-full md:justify-center md:pb-2 pb-2 px-2 md:px-0 scroll-smooth [-webkit-overflow-scrolling:touch]" 
-          style={{ 
+        <div
+          className="flex gap-1 md:gap-3 overflow-x-auto overflow-y-hidden w-full md:justify-center md:pb-2 pb-2 px-2 md:px-0 scroll-smooth [-webkit-overflow-scrolling:touch]"
+          style={{
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -157,60 +157,104 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                 key={category.id}
                 onClick={() => handleCategoryClick(category.id)}
                 disabled={isPending}
-                className={`flex flex-col items-center gap-0.5 px-2 md:px-3 py-1.5 md:py-2 rounded-none transition-all duration-200 flex-shrink-0 border-b-2 disabled:opacity-60 ${
-                  isSelected
+                className={`flex flex-col items-center gap-0.5 px-2 md:px-3 py-1.5 md:py-2 rounded-none transition-all duration-200 flex-shrink-0 border-b-2 disabled:opacity-60 ${isSelected
                     ? 'bg-transparent border-b-2 border-[#000000] text-[#000000]'
                     : 'bg-transparent hover:border-b-2 hover:border-[#000000] hover:text-[#000000] text-gray-600 border-b-2 border-transparent'
-                }`}
+                  }`}
                 style={{ scrollSnapAlign: 'center' }}
                 title={category.name}
               >
                 <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
-                <span className={`text-[11px] md:text-xs text-center whitespace-nowrap ${
-                  isSelected ? 'font-bold' : 'font-medium'
-                }`}>{category.name}</span>
+                <span className={`text-[11px] md:text-xs text-center whitespace-nowrap ${isSelected ? 'font-bold' : 'font-medium'
+                  }`}>{category.name}</span>
               </button>
             );
           })}
         </div>
-        
-        {/* Search Input */}
+
+        {/* Search Input with Animated Border */}
+        <style>{`
+          @keyframes borderRotate {
+            0% { --border-angle: 0deg; }
+            100% { --border-angle: 360deg; }
+          }
+          @property --border-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+          }
+          .animated-border-wrapper {
+            position: relative;
+            border-radius: 12px;
+            padding: 1.5px;
+            background: conic-gradient(
+              from var(--border-angle),
+              #f1f5f9 0%,
+              #cbd5e1 25%,
+              #e2e8f0 50%,
+              #cbd5e1 75%,
+              #f1f5f9 100%
+            );
+            animation: borderRotate 5s linear infinite;
+          }
+          .animated-border-wrapper:focus-within {
+            background: conic-gradient(
+              from var(--border-angle),
+              #f8fafc 0%,
+              #94a3b8 20%,
+              #e2e8f0 40%,
+              #64748b 60%,
+              #e2e8f0 80%,
+              #f8fafc 100%
+            );
+            animation: borderRotate 3s linear infinite;
+          }
+          .animated-border-inner {
+            background: white;
+            border-radius: 11px;
+            position: relative;
+          }
+        `}</style>
         <div className="w-full md:max-w-2xl flex-shrink-0">
-          <div className="relative h-full">
-            {locale === 'en' ? (
-              <>
-                <Input 
-                  type="text" 
-                  placeholder="What are you looking for?"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pr-10 pl-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
-                />
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              </>
-            ) : locale === 'ar' ? (
-              <>
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input 
-                  type="text" 
-                  placeholder="ماذا تورید؟"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
-                />
-              </>
-            ) : (
-              <>
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input 
-                  type="text" 
-                  placeholder=" بەدوای چی دەگەڕێیت؟"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-6 md:py-5 rounded-lg border border-gray-300 focus:border-[#000000] focus:outline-none focus:ring-2 focus:ring-[#000000]/10 transition-all text-base placeholder:text-sm"
-                />
-              </>
-            )}
+          <div className="animated-border-wrapper">
+            <div className="animated-border-inner">
+              <div className="relative h-full">
+                {locale === 'en' ? (
+                  <>
+                    <Input
+                      type="text"
+                      placeholder="What are you looking for?"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pr-10 pl-4 py-6 md:py-5 rounded-[10px] border-0 focus:outline-none focus:ring-0 transition-all text-base placeholder:text-sm bg-transparent"
+                    />
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  </>
+                ) : locale === 'ar' ? (
+                  <>
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Input
+                      type="text"
+                      placeholder="ماذا تورید؟"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-6 md:py-5 rounded-[10px] border-0 focus:outline-none focus:ring-0 transition-all text-base placeholder:text-sm bg-transparent"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Input
+                      type="text"
+                      placeholder=" بەدوای چی دەگەڕێیت؟"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-6 md:py-5 rounded-[10px] border-0 focus:outline-none focus:ring-0 transition-all text-base placeholder:text-sm bg-transparent"
+                    />
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -237,7 +281,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                     </h2>
                     <div className="flex-1 h-0.5 bg-[#000000]"></div>
                   </div>
-                  
+
                   {/* Desktop: Line design */}
                   <div className="hidden md:flex items-center justify-center gap-4">
                     <div className="flex-1 h-px bg-[#000000]"></div>
