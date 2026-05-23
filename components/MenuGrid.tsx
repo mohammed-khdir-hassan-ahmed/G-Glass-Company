@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import OptimizedMenuItem from './OptimizedMenuItem';
 import { useLocale } from 'next-intl';
 import { type MenuItem } from '@/lib/db';
+import { useCart } from '@/components/CartContext';
 
 interface MenuGridProps {
   items: MenuItem[];
@@ -62,8 +63,13 @@ function normalizeColors(value: unknown): string[] {
 
 export default function MenuGrid({ items }: MenuGridProps) {
   const locale = useLocale();
+  const { addToCart } = useCart();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<boolean>(false);
 
   const getDisplayName = (item: MenuItem) => {
     if (locale === 'ar') {
@@ -94,6 +100,10 @@ export default function MenuGrid({ items }: MenuGridProps) {
   const closeItemDialog = () => {
     setSelectedItem(null);
     setSelectedSize(null);
+    setSelectedColor(null);
+    setQuantity(1);
+    setErrorMsg(null);
+    setSuccessMsg(false);
   };
 
   const getSoldOutText = () => {
@@ -206,32 +216,101 @@ export default function MenuGrid({ items }: MenuGridProps) {
                   {itemColors.length > 0 && (
                     <div className="rounded-lg sm:rounded-xl bg-gray-50 p-1.5 sm:p-4 border border-gray-100 mb-2 sm:mb-3">
                       <label className="mb-1 sm:mb-2 block text-xs sm:text-sm font-semibold text-gray-700">
-                        رەنگەکان
+                        {locale === 'en' ? 'Colors' : locale === 'ar' ? 'الألوان' : 'رەنگەکان'}
                       </label>
                       <div className="flex flex-wrap gap-1 sm:gap-2">
-                        {itemColors.map((color) => (
-                          <div
-                            key={color}
-                            className="flex flex-col items-center gap-0.5 sm:gap-1"
-                          >
-                            <div
-                              className={`w-5 h-5 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full border-2 shadow-sm ${color === '#FFFFFF' ? 'border-4 border-gray-800' : 'border-gray-300'
+                        {itemColors.map((color) => {
+                          const isSelected = selectedColor === color;
+                          return (
+                            <button
+                              key={color}
+                              type="button"
+                              onClick={() => {
+                                setSelectedColor(isSelected ? null : color);
+                                setErrorMsg(null);
+                              }}
+                              className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1 rounded-lg border transition-all duration-200 ${
+                                isSelected ? 'bg-gray-100 border-gray-900 scale-105 shadow-sm' : 'bg-transparent border-transparent hover:bg-gray-100'
+                              }`}
+                            >
+                              <div
+                                className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full border-2 shadow-sm relative flex items-center justify-center ${
+                                  color === '#FFFFFF' ? 'border-4 border-gray-800' : 'border-gray-300'
                                 }`}
-                              style={{ backgroundColor: color }}
-                              title={color}
-                            />
-                            <span className="text-xs text-gray-600 text-center font-medium hidden sm:inline">{color}</span>
-                          </div>
-                        ))}
+                                style={{ backgroundColor: color }}
+                                title={color}
+                              >
+                                {isSelected && (
+                                  <span className={`text-[10px] font-bold ${color === '#FFFFFF' ? 'text-black' : 'text-white'} drop-shadow-md`}>
+                                    ✓
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-[10px] text-gray-600 text-center font-medium hidden sm:inline">{color}</span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
                 </div>
 
-                <div className="border-t border-gray-200 bg-white px-2.5 py-2 sm:px-5 sm:py-4 md:px-8 md:py-5">
+                <div className="border-t border-gray-200 bg-white px-2.5 py-3 sm:px-5 sm:py-4 md:px-8 md:py-5 flex flex-col gap-3">
+                  {errorMsg && (
+                    <p className="text-red-500 text-xs sm:text-sm text-center font-bold">
+                      {errorMsg}
+                    </p>
+                  )}
+                  {successMsg && (
+                    <p className="text-green-600 text-xs sm:text-sm text-center font-bold">
+                      {locale === 'en' ? 'Added to cart successfully!' : locale === 'ar' ? 'تم الإضافة إلى السلة بنجاح!' : 'بە سەرکەوتوویی زیادکرا بۆ سەبەتە!'}
+                    </p>
+                  )}
+
+                  {!isSoldOut && (
+                    <div className="flex items-center gap-3 w-full">
+                      {/* Quantity Selector */}
+                      <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shrink-0 h-10 sm:h-12 bg-gray-50">
+                        <button
+                          type="button"
+                          onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                          className="w-10 h-full flex items-center justify-center font-bold text-gray-600 hover:bg-gray-205 transition"
+                        >
+                          -
+                        </button>
+                        <span className="w-10 text-center font-bold text-sm sm:text-base text-gray-800">
+                          {quantity}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setQuantity(q => q + 1)}
+                          className="w-10 h-full flex items-center justify-center font-bold text-gray-600 hover:bg-gray-205 transition"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Add to Cart Button */}
+                      <Button
+                        onClick={() => {
+                          addToCart(selectedItem, quantity, selectedSize, selectedColor);
+                          setSuccessMsg(true);
+                          setErrorMsg(null);
+                          setTimeout(() => {
+                            closeItemDialog();
+                          }, 800);
+                        }}
+                        className="h-10 sm:h-12 flex-1 bg-gray-900 text-xs sm:text-sm md:text-base font-bold text-white hover:bg-gray-950 shadow-md hover:shadow-lg transition-all duration-200 rounded-lg"
+                      >
+                        {locale === 'en' ? 'Add to Cart' : locale === 'ar' ? 'إضافة إلى السلة' : 'زیادکردن بۆ سەبەتە'}
+                      </Button>
+                    </div>
+                  )}
+
                   <Button
                     onClick={closeItemDialog}
-                    className="h-8 sm:h-11 w-full bg-gray-900 text-xs sm:text-sm md:text-base font-semibold text-white hover:bg-gray-950 shadow-md hover:shadow-lg transition-all duration-200 md:h-12 rounded-lg"
+                    variant="outline"
+                    className="h-8 sm:h-10 w-full text-xs sm:text-sm font-semibold border-gray-300 hover:bg-gray-50 transition-all duration-200 rounded-lg text-gray-700"
                   >
                     {locale === 'en' ? 'Close' : 'داخستن'}
                   </Button>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Info, Phone, Clock } from 'lucide-react';
+import { MapPin, Info, Phone, Clock, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -24,9 +24,9 @@ export default function Navbar() {
     <>
       <nav className="flex items-center justify-between px-4 md:px-12 py-1 md:py-0.5 border-b-2 border-gray-100 top-0 z-40 bg-white gap-6 sticky">
         {/* Left side - Logo */}
-        <div className="w-[65px] h-[65px] md:w-16 md:h-16 flex-shrink-0">
+        <div className="w-[50px] h-[50px] md:w-16 md:h-16 flex-shrink-0">
           <Image
-            src="/image/image.jpeg"
+            src="/image/logo.jpeg"
             alt="Logo"
             width={100}
             height={100}
@@ -75,7 +75,7 @@ export default function Navbar() {
           <div className="flex flex-col items-center gap-2 mb-3.5 lg:mb-4 pb-2 border-b-2 border-gray-100">
             <div className="relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 p-1.5 flex items-center justify-center">
               <Image
-                src="/image/image.jpeg"
+                src="/image/logo.jpeg"
                 alt="Logo"
                 fill
                 className="object-contain"
@@ -203,19 +203,30 @@ export default function Navbar() {
             </div>
 
             {/* Location Card */}
-            <div className="bg-gradient-to-br from-purple-50 via-purple-50 to-indigo-50 rounded-xl px-2 md:px-3 py-2 md:py-2.5 border-1.5 border-purple-300 shadow-sm hover:shadow-md transition-all">
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <div className="bg-gradient-to-br from-purple-400 to-indigo-600 rounded-full p-1.5 shadow-sm">
-                  <MapPin size={12} className="text-white" />
+            <a
+              href="https://www.google.com/maps?q=36.144667,43.997528"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gradient-to-br from-purple-50 via-purple-50 to-indigo-50 rounded-xl px-2 md:px-3 py-2 md:py-2.5 border-1.5 border-purple-300 shadow-sm hover:shadow-md transition-all block cursor-pointer hover:scale-[1.02] duration-200"
+            >
+              <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                <div className="flex items-center gap-1.5">
+                  <div className="bg-gradient-to-br from-purple-400 to-indigo-600 rounded-full p-1.5 shadow-sm">
+                    <MapPin size={12} className="text-white" />
+                  </div>
+                  <p className="text-[8px] md:text-[9px] font-bold text-purple-900 uppercase tracking-tight">
+                    {locale === 'en' ? 'Location' : locale === 'ar' ? 'الموقع' : 'ناونیشان'}
+                  </p>
                 </div>
-                <p className="text-[8px] md:text-[9px] font-bold text-purple-900 uppercase tracking-tight">
-                  {locale === 'en' ? 'Location' : locale === 'ar' ? 'الموقع' : 'ناونیشان'}
-                </p>
+                <div className="flex items-center gap-0.5 bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded text-[7px] md:text-[8px] font-black">
+                  <span>Google Maps</span>
+                  <ExternalLink size={8} />
+                </div>
               </div>
               <p className="text-[8px] md:text-[9px] lg:text-[10px] text-purple-800 font-semibold leading-tight" dir={locale === 'en' ? 'ltr' : 'rtl'}>
                 {locale === 'en' ? 'Iraq - erbil - north industrial' : locale === 'ar' ? 'عراق  - اربیل - الصناعە الشمالیە' : 'عێراق - ‌هەولێر - پیشەسازی باشوور'}
               </p>
-            </div>
+            </a>
 
             {/* Close Button */}
             <Button

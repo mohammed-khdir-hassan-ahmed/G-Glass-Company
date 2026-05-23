@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/request';
 import LocaleSetup from './LocaleSetup';
+import { CartProvider } from '@/components/CartContext';
 
 export const metadata: Metadata = {
   title: "G-Glass",
@@ -35,9 +36,11 @@ export default async function LocaleLayout({
   return (
     <LocaleSetup locale={locale}>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <div dir={dir} className="min-h-screen">
-          {children}
-        </div>
+        <CartProvider>
+          <div dir={dir} className="min-h-screen">
+            {children}
+          </div>
+        </CartProvider>
       </NextIntlClientProvider>
     </LocaleSetup>
   );

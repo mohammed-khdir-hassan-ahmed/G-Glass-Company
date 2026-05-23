@@ -240,14 +240,14 @@ export default function DashboardPage() {
       });
 
       if (response.ok) {
-        setMessage('خواردن بسەرکەوتوویی زیادکرا!');
+        setMessage('کاڵا بەسەرکەوتوویی زیادکرا!');
         setMessageType('success');
         resetForm();
         setShowAddModal(false);
         fetchItems();
       } else {
         const responseData = await response.json();
-        setMessage(`هەڵە: ${responseData?.error || 'خواردن زیاد نەکرا'}`);
+        setMessage(`هەڵە: ${responseData?.error || 'کاڵا زیاد نەکرا'}`);
         setMessageType('error');
       }
     } catch (error) {
@@ -270,7 +270,7 @@ export default function DashboardPage() {
     try {
       const response = await fetch(`/api/menu/${deleteId}`, { method: 'DELETE' });
       if (response.ok) {
-        setMessage('خواردن سڕایەوە!');
+        setMessage('کاڵا سڕایەوە!');
         setMessageType('success');
         fetchItems();
       } else {
@@ -353,7 +353,7 @@ export default function DashboardPage() {
       });
 
       if (response.ok) {
-        setMessage('خواردن نوێکراوە!');
+        setMessage('کاڵا نوێکراوە!');
         setMessageType('success');
         resetForm();
         setShowEditModal(false);
@@ -405,7 +405,7 @@ export default function DashboardPage() {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12">
               <Image
-                src="/image/image.jpeg"
+                src="/image/logo.jpeg"
                 alt="Logo"
                 width={50}
                 height={50}
@@ -796,7 +796,7 @@ export default function DashboardPage() {
           <form onSubmit={handleEditSubmit} className="space-y-3">
             <div>
               <label htmlFor="edit-name_en" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردنەی (English)
+                ناوی کاڵای (English)
               </label>
               <input
                 id="edit-name_en"
@@ -811,7 +811,7 @@ export default function DashboardPage() {
 
             <div>
               <label htmlFor="edit-name_ckb" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردنەی (Kurdish)
+                ناوی کاڵا (Kurdish)
               </label>
               <input
                 id="edit-name_ckb"
@@ -826,7 +826,7 @@ export default function DashboardPage() {
 
             <div>
               <label htmlFor="edit-name_arb" className="block text-sm font-semibold text-gray-700 mb-2">
-                ناوی خواردنەی (Arabic)
+                ناوی کاڵا (Arabic)
               </label>
               <input
                 id="edit-name_arb"

@@ -11,6 +11,7 @@ import Loading from './loading';
 import { CATEGORIES } from '@/lib/categories';
 import { Home as HomeIcon, Gem, Sparkles, Flower2, Palette, Circle, Diamond, CheckCircle2, Zap } from 'lucide-react';
 import { useLocale } from 'next-intl';
+import FloatingCart from '@/components/FloatingCart';
 
 
 const ICON_COMPONENTS: Record<string, any> = {
@@ -131,6 +132,7 @@ export default async function Home({
       </ImageKitWrapper>
       <ScrollButtons />
       <Celebration />
+      <FloatingCart />
       <footer className="py-4 md:py-6 text-gray-600 text-xs md:text-sm px-2 md:px-4" dir="ltr">
         <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2">
           <span className='font-bold'>Designed and developed by</span>
