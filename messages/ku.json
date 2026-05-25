@@ -1,0 +1,18 @@
+{
+  "common": {
+    "location": "ئاسای",
+    "language": "زمان",
+    "english": "English",
+    "kurdish": "کوردی"
+  },
+  "menu": {
+    "title": " کۆمپانیای G-Glass",
+    "noItems": "هیچ کاڵایەک بەردەست نییە",
+    "error": "خرابی لە بارکردنی کاڵایەکان"
+  },
+  "social": {
+    "title": "سۆشیاڵ میدیاکانمان:",
+    "facebook": "فیسبووک",
+    "tiktok": "تیک تۆک"
+  }
+}

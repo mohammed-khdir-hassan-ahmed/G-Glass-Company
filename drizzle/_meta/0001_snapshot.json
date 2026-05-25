@@ -1,0 +1,85 @@
+{
+  "version": "5",
+  "dialect": "postgresql",
+  "id": "0",
+  "prevId": "",
+  "tables": {
+    "menuitem": {
+      "name": "menuitem",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name_en": {
+          "name": "name_en",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name_ckb": {
+          "name": "name_ckb",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'main'"
+        }
+      },
+      "indexes": {
+        "idx_menuitem_category": {
+          "name": "idx_menuitem_category",
+          "columns": [
+            "category"
+          ],
+          "isUnique": false
+        },
+        "idx_menuitem_category_id": {
+          "name": "idx_menuitem_category_id",
+          "columns": [
+            "category",
+            "id"
+          ],
+          "isUnique": false
+        },
+        "idx_menuitem_price": {
+          "name": "idx_menuitem_price",
+          "columns": [
+            "price"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

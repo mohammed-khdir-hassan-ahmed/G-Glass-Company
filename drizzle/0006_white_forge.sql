@@ -1,0 +1,1 @@
+ALTER TABLE "menuitem" ADD COLUMN "is_sold_out" boolean DEFAULT false;

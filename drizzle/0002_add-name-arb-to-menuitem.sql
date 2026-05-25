@@ -1,0 +1,1 @@
+ALTER TABLE "menuitem" ADD COLUMN "name_arb" varchar(255);

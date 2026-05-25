@@ -1,0 +1,1 @@
+ALTER TABLE "menuitem" ADD COLUMN "colors" json DEFAULT '[]';
