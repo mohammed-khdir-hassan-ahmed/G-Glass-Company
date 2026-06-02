@@ -18,6 +18,7 @@ import { getAdminImageUrl } from '@/lib/imagekit';
 import { useLocale } from 'next-intl';
 import DashboardLanguageSwitcher from '@/components/DashboardLanguageSwitcher';
 import ColorPicker from '@/components/ColorPicker';
+import CarouselManagement from '@/components/CarouselManagement';
 import { type MenuItem } from '@/lib/db';
 import { CATEGORIES, getCategoriesExcludingAll } from '@/lib/categories';
 
@@ -52,6 +53,7 @@ export default function DashboardPage() {
   const locale = useLocale();
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentSection, setCurrentSection] = useState<'menu' | 'carousel'>('menu');
   const [items, setItems] = useState<MenuItem[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -427,6 +429,33 @@ export default function DashboardPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+        {/* Tab Navigation */}
+        <div className="flex gap-2 mb-6 border-b border-gray-200">
+          <button
+            onClick={() => setCurrentSection('menu')}
+            className={`px-6 py-3 font-bold text-lg transition ${
+              currentSection === 'menu'
+                ? 'text-[#000000] border-b-2 border-[#000000]'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            مینیوو
+          </button>
+          <button
+            onClick={() => setCurrentSection('carousel')}
+            className={`px-6 py-3 font-bold text-lg transition ${
+              currentSection === 'carousel'
+                ? 'text-[#000000] border-b-2 border-[#000000]'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            کارۆسێل
+          </button>
+        </div>
+
+        {/* Menu Section */}
+        {currentSection === 'menu' && (
+          <>
         <div className="w-full mb-4 flex flex-col md:flex-row md:items-center md:justify-end gap-2">
           <Button
             onClick={() => {
@@ -535,8 +564,13 @@ export default function DashboardPage() {
             })
           )}
         </div>
+        </>
+        )}
 
-
+        {/* Carousel Section */}
+        {currentSection === 'carousel' && (
+          <CarouselManagement />
+        )}
       </div>
 
       <Dialog open={showAddModal} onOpenChange={setShowAddModal}>

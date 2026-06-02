@@ -10,8 +10,8 @@ export const imageKitLoader = ({ src, width, quality }: ImageLoaderProps): strin
     return '';
   }
 
-  // Return the path as-is if it's already a full URL from ImageKit
-  if (src.startsWith('http')) {
+  // Return the path as-is if it's already a full URL or a local static asset (e.g. /image/logo.jpeg)
+  if (src.startsWith('http') || src.startsWith('/image/')) {
     return src;
   }
 

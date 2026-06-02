@@ -83,6 +83,7 @@ export default function OptimizedMenuItem({
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imgSrc, setImgSrc] = useState(item.image_url);
 
   // Get the appropriate name based on locale with proper fallbacks
   const getDisplayName = () => {
@@ -210,7 +211,7 @@ export default function OptimizedMenuItem({
         )}
         <Image
           loader={imageKitLoader}
-          src={item.image_url}
+          src={imgSrc}
           alt={displayName}
           width={200}
           height={200}
@@ -223,7 +224,8 @@ export default function OptimizedMenuItem({
           className={`w-full h-full object-cover ${isSoldOut ? 'grayscale' : ''}`}
           onLoadingComplete={() => setImageLoaded(true)}
           onError={(e) => {
-            console.error(`Failed to load image for ${displayName}`);
+            console.warn(`Failed to load image for ${displayName}. Falling back to default logo.`);
+            setImgSrc('/image/logo.jpeg');
           }}
         />
       </div>

@@ -137,7 +137,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
       <div className="flex flex-col gap-3 items-center mt-6 mb-4 px-1 md:px-0 w-full">
         {/* Categories with loading indicator */}
         <div
-          className="flex gap-1 md:gap-3 overflow-x-auto overflow-y-hidden w-full md:justify-center md:pb-2 pb-2 px-2 md:px-0 scroll-smooth [-webkit-overflow-scrolling:touch]"
+          className="flex gap-1 md:gap-3 overflow-x-auto overflow-y-hidden w-full md:justify-between md:pb-2 pb-2 px-2 md:px-0 scroll-smooth [-webkit-overflow-scrolling:touch]"
           style={{
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
@@ -227,7 +227,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
             background: rgba(255, 255, 255, 1);
           }
         `}</style>
-        <div className="w-full md:max-w-2xl flex-shrink-0 relative group">
+        <div className="w-full flex-shrink-0 relative group">
           {/* Ambient glass-prism background glow */}
           <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-300 via-slate-400 to-gray-500 rounded-[13px] blur-lg opacity-0 group-hover:opacity-10 group-focus-within:opacity-20 transition duration-500 pointer-events-none z-0"></div>
           

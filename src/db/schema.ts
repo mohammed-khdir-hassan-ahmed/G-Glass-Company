@@ -1,8 +1,8 @@
-import { integer, pgTable, varchar, index, text, json, boolean } from 'drizzle-orm/pg-core';
-import { InferSelectModel } from 'drizzle-orm';
+import { integer, pgTable, varchar, index, text, json, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { InferSelectModel, sql } from 'drizzle-orm';
 
 export const menuitem = pgTable('menuitem', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   name_en: varchar('name_en', { length: 255 }).notNull(),
   name_ckb: varchar('name_ckb', { length: 255 }).notNull(),
   name_arb: varchar('name_arb', { length: 255 }),
@@ -25,3 +25,17 @@ export const menuitem = pgTable('menuitem', {
 ]);
 
 export type MenuItem = InferSelectModel<typeof menuitem>;
+
+export const carousel = pgTable('carousel', {
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
+  image_url: varchar('image_url', { length: 255 }).notNull(),
+  order_index: integer('order_index').default(0).notNull(),
+  is_active: boolean('is_active').default(true).notNull(),
+  created_at: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updated_at: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+}, (table) => [
+  index('idx_carousel_order').on(table.order_index),
+  index('idx_carousel_active').on(table.is_active),
+]);
+
+export type Carousel = InferSelectModel<typeof carousel>;

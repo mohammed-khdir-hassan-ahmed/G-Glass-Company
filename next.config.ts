@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+    localPatterns: [
+      {
+        pathname: '/**',
+      },
+    ],
     // Enable AVIF format for better compression
     formats: ['image/avif', 'image/webp'],
     // Optimize images aggressively
