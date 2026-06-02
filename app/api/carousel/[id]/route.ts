@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { carousel } from '@/src/db/schema';
 import { eq } from 'drizzle-orm';
+import { deleteImageFromImageKit } from '@/lib/imagekit-server';
 
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql);
@@ -66,6 +67,16 @@ export async function DELETE(
       .delete(carousel)
       .where(eq(carousel.id, parseInt(id)))
       .returning();
+
+    if (!result || result.length === 0) {
+      return Response.json({ error: 'Item not found' }, { status: 404 });
+    }
+
+    // Delete associated image from ImageKit
+    if (result[0].image_url) {
+      console.log(`🧹 Carousel item deleted, cleaning up image: ${result[0].image_url}`);
+      await deleteImageFromImageKit(result[0].image_url);
+    }
 
     return Response.json(result[0]);
   } catch (error) {

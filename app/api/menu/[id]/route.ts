@@ -3,6 +3,7 @@ import { neon } from '@neondatabase/serverless';
 import { menuitem } from '@/src/db/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { deleteImageFromImageKit } from '@/lib/imagekit-server';
 
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql);
@@ -125,6 +126,12 @@ export async function DELETE(
 
     if (deletedItem.length === 0) {
       return Response.json({ error: 'Item not found' }, { status: 404 });
+    }
+
+    // Delete associated image from ImageKit
+    if (deletedItem[0].image_url) {
+      console.log(`🧹 Menu item deleted, cleaning up image: ${deletedItem[0].image_url}`);
+      await deleteImageFromImageKit(deletedItem[0].image_url);
     }
 
     // Revalidate the home page cache

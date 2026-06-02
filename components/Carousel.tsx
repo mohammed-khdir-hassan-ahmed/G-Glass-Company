@@ -44,7 +44,7 @@ export default function Carousel() {
     const interval = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 5000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [items.length]);

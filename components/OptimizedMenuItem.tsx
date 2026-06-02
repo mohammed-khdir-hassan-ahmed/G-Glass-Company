@@ -19,7 +19,7 @@
 import Image from 'next/image';
 import { imageKitLoader, getResponsiveSizes } from '@/lib/imagekit-loader';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { type MenuItem } from '@/lib/db';
 
@@ -80,10 +80,39 @@ export default function OptimizedMenuItem({
   index = 0,
 }: OptimizedMenuItemProps) {
   const locale = useLocale();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [imgSrc, setImgSrc] = useState(item.image_url);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+          setIsInView(false);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px',
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
   // Get the appropriate name based on locale with proper fallbacks
   const getDisplayName = () => {
@@ -134,38 +163,83 @@ export default function OptimizedMenuItem({
 
   const isRTL = locale === 'ku' || locale === 'ar';
 
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.88,
+      filter: 'blur(8px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.7,
+        delay: index * 0.06,
+        type: 'spring' as const,
+        stiffness: 90,
+        damping: 20,
+      },
+    },
+  };
+
+  const hoverVariants = {
+    rest: {
+      y: 0,
+      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+      scale: 1,
+    },
+    hover: {
+      y: -4,
+      boxShadow: '0 12px 28px rgba(0,0,0,0.12)',
+      scale: 1.015,
+    },
+  };
+
   return (
     <motion.div
-      role="button"
-      tabIndex={0}
-      onClick={() => onSelect(item)}
-      onTouchStart={(e) => {
-        const touch = e.touches[0];
-        setTouchStart({ x: touch.clientX, y: touch.clientY });
-      }}
-      onTouchEnd={(e) => {
-        const touch = e.changedTouches[0];
-        const deltaX = Math.abs(touch.clientX - touchStart.x);
-        const deltaY = Math.abs(touch.clientY - touchStart.y);
-
-        if (deltaX < 10 && deltaY < 10) {
-          onSelect(item);
-        }
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          onSelect(item);
-        }
-      }}
-      initial={{ opacity: 0, x: isFromLeft ? -50 : 50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, ease: 'easeOut', delay: (index % 4) * 0.1 }}
-      dir={isRTL ? 'rtl' : 'ltr'}
-      className={`relative overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-2xl bg-white flex lg:flex-col items-center lg:items-stretch w-full lg:w-auto h-40 md:h-44 lg:h-full active:shadow-md ${isSoldOut ? 'opacity-60' : ''
-        }`}
+      ref={ref}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      className="h-full"
     >
-      {/* Favorite Button - Top Right Mobile */}
+      <motion.div
+        role="button"
+        tabIndex={0}
+        onClick={() => onSelect(item)}
+        onTouchStart={(e) => {
+          const touch = e.touches[0];
+          setTouchStart({ x: touch.clientX, y: touch.clientY });
+        }}
+        onTouchEnd={(e) => {
+          const touch = e.changedTouches[0];
+          const deltaX = Math.abs(touch.clientX - touchStart.x);
+          const deltaY = Math.abs(touch.clientY - touchStart.y);
+
+          if (deltaX < 10 && deltaY < 10) {
+            onSelect(item);
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onSelect(item);
+          }
+        }}
+        variants={hoverVariants}
+        initial="rest"
+        animate={isHovering ? 'hover' : 'rest'}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        dir={isRTL ? 'rtl' : 'ltr'}
+        className={`group relative overflow-hidden cursor-pointer rounded-3xl bg-white border border-gray-100 flex flex-col items-stretch w-full h-full active:shadow-md ${
+          isSoldOut ? 'opacity-60' : ''
+        }`}
+      >
+      {/* Premium Favorite Heart Button */}
       <motion.button
         onClick={(e) => {
           e.preventDefault();
@@ -179,14 +253,14 @@ export default function OptimizedMenuItem({
         }}
         animate={isFavorite ? { scale: [1, 1.3, 1], rotate: [0, 360] } : {}}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
-        className="absolute lg:hidden top-2 z-20 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 pointer-events-auto"
+        className="absolute top-2.5 z-20 bg-white/90 backdrop-blur-md rounded-full p-2 shadow-md border border-gray-100 hover:shadow-lg transition-all hover:scale-110 active:scale-95 pointer-events-auto"
         style={{
-          [isRTL ? 'left' : 'right']: '0.5rem'
+          [isRTL ? 'left' : 'right']: '0.65rem'
         }}
         aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       >
         <svg
-          className={`w-5 h-5 md:w-6 md:h-6 ${isFavorite ? 'fill-red-500' : 'fill-none text-gray-400'}`}
+          className={`w-4 h-4 sm:w-4.5 sm:h-4.5 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-none text-gray-400'}`}
           stroke={isFavorite ? 'none' : 'currentColor'}
           viewBox="0 0 24 24"
         >
@@ -199,12 +273,13 @@ export default function OptimizedMenuItem({
         </svg>
       </motion.button>
 
-      {/* Image Section - RTL: Right Side, LTR: Left Side */}
-      <div className={`relative w-1/2 lg:w-full h-full lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-100 to-gray-50 transition-opacity duration-300 ${isRTL ? 'order-2 lg:order-1' : 'order-1'} ${imageLoaded ? 'opacity-100' : 'opacity-90'
-        }`}>
+      {/* Image Section */}
+      <div className={`relative w-full h-36 sm:h-40 md:h-44 lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-50 to-gray-100 transition-opacity duration-300 ${
+        imageLoaded ? 'opacity-100' : 'opacity-90'
+      }`}>
         {isSoldOut && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
-            <span className="text-white font-bold text-sm md:text-base bg-red-600 px-3 py-1.5 rounded-lg shadow-lg">
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-[1.5px] flex items-center justify-center z-10">
+            <span className="text-white font-extrabold text-xs sm:text-sm bg-gradient-to-r from-red-600 to-red-700 px-3 py-1.5 rounded-xl shadow-lg">
               {getSoldOutText()}
             </span>
           </div>
@@ -221,7 +296,9 @@ export default function OptimizedMenuItem({
           blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23f3f4f6' width='200' height='200'/%3E%3C/svg%3E"
           quality={75}
           loading={priority ? 'eager' : 'lazy'}
-          className={`w-full h-full object-cover ${isSoldOut ? 'grayscale' : ''}`}
+          className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-108 ${
+            isSoldOut ? 'grayscale' : ''
+          }`}
           onLoadingComplete={() => setImageLoaded(true)}
           onError={(e) => {
             console.warn(`Failed to load image for ${displayName}. Falling back to default logo.`);
@@ -230,30 +307,33 @@ export default function OptimizedMenuItem({
         />
       </div>
 
-      {/* Content Section - RTL: Left Side, LTR: Right Side */}
-      <div className={`w-1/2 lg:w-full px-4 md:px-6 lg:px-4 py-3 md:py-4 lg:py-3 flex flex-col justify-center items-center h-full gap-2.5 ${isRTL ? 'order-1 lg:order-2' : 'order-2'}`}>
-        {/* Title */}
-        <h3 className={`font-extrabold text-sm md:text-base lg:text-base line-clamp-2 leading-tight ${isRTL ? 'text-right lg:text-center' : 'text-center'} ${isSoldOut ? 'line-through text-gray-400' : 'text-gray-900'}`}>
-          {displayName}
-        </h3>
+      {/* Content Section */}
+      <div className="w-full px-3 py-3 sm:px-4 flex flex-col justify-between flex-1 items-center gap-2">
+        {/* Title, Description & Price */}
+        <div className="flex flex-col items-center gap-1.5 w-full">
+          <h3 className="font-black text-[13px] sm:text-[15px] md:text-base line-clamp-1 leading-tight tracking-tight text-gray-900 text-center">
+            {displayName}
+          </h3>
+          {description && (
+            <p className="text-[10px] sm:text-xs md:text-xs line-clamp-1 leading-normal text-gray-400 text-center px-1 font-medium">
+              {description}
+            </p>
+          )}
+          <span className="text-gray-950 font-black text-[11px] sm:text-[13px] bg-slate-50 border border-slate-200/50 px-2.5 py-0.5 rounded-full shadow-sm mt-1">
+            {item.price}
+          </span>
+        </div>
 
-        {/* Description */}
-        {description && (
-          <p className={`text-xs md:text-sm lg:text-sm line-clamp-2 leading-tight ${isRTL ? 'text-right lg:text-center' : 'text-center'} text-gray-600`}>
-            {description}
-          </p>
-        )}
-
-        {/* Colors and Sizes - Compact with Icons */}
-        <div className="flex flex-col gap-2 lg:gap-1.5 items-center w-full">
+        {/* Colors and Sizes Display at Bottom */}
+        <div className="flex flex-col gap-1.5 items-center w-full mt-auto">
           {/* Colors */}
           {itemColors.length > 0 && (
-            <div className="flex items-center gap-2 justify-center">
-              <div className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="flex items-center gap-1 justify-center">
+              <div className="flex gap-1.5">
                 {itemColors.map((color) => (
                   <div
                     key={color}
-                    className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5 rounded-full border-2 border-gray-200 shadow-md flex-shrink-0 hover:scale-110 transition-transform"
+                    className="w-3.5 h-3.5 rounded-full border border-gray-300/80 shadow-sm flex-shrink-0 transition-transform hover:scale-110"
                     style={{ backgroundColor: color }}
                     title={color}
                   />
@@ -264,18 +344,18 @@ export default function OptimizedMenuItem({
 
           {/* Sizes */}
           {itemSizes.length > 0 && (
-            <div className={`flex items-center gap-2 justify-center flex-wrap ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className={`flex gap-2 flex-wrap justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="flex items-center gap-1 justify-center flex-wrap">
+              <div className="flex gap-1 flex-wrap justify-center">
                 {itemSizes.slice(0, 2).map((size: string) => (
                   <div
                     key={size}
-                    className="px-2.5 py-1 lg:px-2 lg:py-0.5 text-xs lg:text-xs font-bold rounded-md bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 border border-gray-200 shadow-sm hover:from-gray-100 hover:to-gray-150 transition-all"
+                    className="px-2.5 py-0.5 text-[9px] font-extrabold rounded-full bg-slate-50 text-slate-500 border border-slate-200/50 shadow-sm"
                   >
                     {size}
                   </div>
                 ))}
                 {itemSizes.length > 2 && (
-                  <div className="px-2.5 py-1 lg:px-2 lg:py-0.5 text-xs lg:text-xs font-bold rounded-md bg-gradient-to-br from-blue-50 to-blue-100 text-blue-800 border border-blue-200 shadow-sm hover:from-blue-100 hover:to-blue-150 transition-all">
+                  <div className="px-1.5 py-0.5 text-[9px] font-extrabold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/40 shadow-sm">
                     +{itemSizes.length - 2}
                   </div>
                 )}
@@ -284,6 +364,7 @@ export default function OptimizedMenuItem({
           )}
         </div>
       </div>
+      </motion.div>
     </motion.div>
   );
 }
