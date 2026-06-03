@@ -108,9 +108,9 @@ export default function CarouselManagement() {
         return;
       }
 
-      // Check if already have 3 items
-      if (items.length >= 3) {
-        setMessage('تەنها سێ وێنە دەتوانیت زیاد بکەیت!');
+      // Check if already have 9 items
+      if (items.length >= 9) {
+        setMessage('تەنها نۆ وێنە دەتوانیت زیاد بکەیت!');
         setMessageType('error');
         setSubmitting(false);
         return;
@@ -192,7 +192,7 @@ export default function CarouselManagement() {
   return (
     <div className="space-y-6">
       {/* Section 1: Add New Image */}
-      {items.length < 3 && (
+      {items.length < 9 && (
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-gray-800">زیادکردنی وێنەی کارۆسێل</h3>
@@ -213,7 +213,7 @@ export default function CarouselManagement() {
 
       {/* Section 2: Images List */}
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">لیستی وێنەکان ({items.length}/3)</h3>
+        <h3 className="text-lg font-bold text-gray-800 mb-4">لیستی وێنەکان ({items.length}/9)</h3>
         {items.length === 0 ? (
           <p className="text-gray-500 text-center py-8">هیچ وێنێک بەردەست نییە</p>
         ) : (

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Info, Phone, Clock, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,12 +12,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import CompanyShowcase from '@/components/CompanyShowcase';
 import { useLocale } from 'next-intl';
 
 export default function Navbar() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const locale = useLocale();
 
   return (
@@ -38,14 +36,6 @@ export default function Navbar() {
         <div className="flex gap-2 items-center">
           {/* Language Switcher */}
           <LanguageSwitcher />
-          {/* About Button */}
-          <Button
-            className="cursor-pointer w-10 h-10 aspect-square md:w-10 md:h-10 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-md flex items-center justify-center flex-shrink-0"
-            onClick={() => setIsCompanyOpen(true)}
-            title={locale === 'ar' ? 'حول الشركة' : locale === 'ku' ? 'دەربارەی کۆمپانیا' : 'About Company'}
-          >
-            <Info className="w-6 h-6 md:w-5 md:h-5" />
-          </Button>
           {/* Location Button */}
           <Button
             className="cursor-pointer w-10 h-10 aspect-square md:w-10 md:h-10 bg-[#000000] hover:bg-[#1a1a1a] text-white rounded-md flex items-center justify-center flex-shrink-0"
@@ -55,9 +45,6 @@ export default function Navbar() {
           </Button>
         </div>
       </nav>
-
-      {/* Company Showcase Modal */}
-      <CompanyShowcase isOpen={isCompanyOpen} onClose={() => setIsCompanyOpen(false)} />
 
       {/* Location Modal */}
       <Dialog open={isLocationOpen} onOpenChange={setIsLocationOpen}>

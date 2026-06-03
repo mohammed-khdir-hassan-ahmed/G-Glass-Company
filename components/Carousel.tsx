@@ -40,7 +40,7 @@ export default function Carousel() {
   // Auto-rotate every 5 seconds (smooth and premium feel)
   useEffect(() => {
     if (items.length === 0) return;
-    
+
     const interval = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % items.length);
