@@ -185,9 +185,8 @@ export default function FloatingCart() {
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '-100%' : '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed top-0 bottom-0 z-50 w-full sm:max-w-md bg-white shadow-2xl flex flex-col ${
-                isRTL ? 'left-0 border-r border-gray-100' : 'right-0 border-l border-gray-100'
-              }`}
+              className={`fixed top-0 bottom-0 z-50 w-full sm:max-w-md bg-white shadow-2xl flex flex-col ${isRTL ? 'left-0 border-r border-gray-100' : 'right-0 border-l border-gray-100'
+                }`}
               dir={isRTL ? 'rtl' : 'ltr'}
             >
               {/* Header */}
@@ -320,9 +319,8 @@ export default function FloatingCart() {
                     placeholder={t.phonePlaceholder}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className={`w-full bg-white border-gray-200 text-[16px] md:text-sm placeholder:text-xs font-medium rounded-lg h-9 ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
+                    className={`w-full bg-white border-gray-200 text-[16px] md:text-sm placeholder:text-xs font-medium rounded-lg h-9 ${isRTL ? 'text-right' : 'text-left'
+                      }`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   />
                   <Input

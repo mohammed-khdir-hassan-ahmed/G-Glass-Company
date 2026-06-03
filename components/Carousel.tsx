@@ -16,7 +16,7 @@ interface CarouselItem {
 export default function Carousel() {
   const [items, setItems] = useState<CarouselItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 for left/prev, 1 for right/next
+  const [direction, setDirection] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function Carousel() {
   const fetchItems = async () => {
     try {
       const response = await fetch('/api/carousel');
+
       if (response.ok) {
         const data = await response.json();
         setItems(data);
@@ -37,30 +38,33 @@ export default function Carousel() {
     }
   };
 
-  // Auto-rotate every 5 seconds (smooth and premium feel)
   useEffect(() => {
-    if (items.length === 0) return;
+    if (!items.length) return;
 
     const interval = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 2000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [items.length]);
 
-  if (loading || items.length === 0) return null;
+  if (loading || !items.length) return null;
 
   const currentItem = items[currentIndex];
 
   const handlePrev = () => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + items.length) % items.length
+    );
   };
 
   const handleNext = () => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % items.length);
+    setCurrentIndex(
+      (prev) => (prev + 1) % items.length
+    );
   };
 
   const handleDotClick = (index: number) => {
@@ -68,31 +72,55 @@ export default function Carousel() {
     setCurrentIndex(index);
   };
 
-  // Slide & Zoom animations variants
   const slideVariants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? '100%' : dir < 0 ? '-100%' : '0%',
+      x: dir > 0 ? 120 : -120,
       opacity: 0,
-      scale: 0.96,
+      scale: 1.03,
+      filter: 'blur(8px)',
     }),
+
     center: {
-      x: '0%',
+      x: 0,
       opacity: 1,
       scale: 1,
-      zIndex: 1,
+      filter: 'blur(0px)',
     },
+
     exit: (dir: number) => ({
-      x: dir < 0 ? '100%' : dir > 0 ? '-100%' : '0%',
+      x: dir > 0 ? -120 : 120,
       opacity: 0,
-      scale: 0.96,
-      zIndex: 0,
+      scale: 0.98,
+      filter: 'blur(8px)',
     }),
   };
 
   return (
-    <div className="w-full my-6 rounded-xl overflow-hidden shadow-xl bg-white border border-gray-100/50">
-      <div className="relative w-full h-44 md:h-80 lg:h-96 bg-gray-950 overflow-hidden">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+    <motion.div
+      whileHover={{
+        scale: 1.01,
+      }}
+      transition={{
+        duration: 0.5,
+      }}
+      className="
+        w-full
+        my-8
+        overflow-hidden
+        rounded-3xl
+        bg-white
+        border
+        border-white/20
+        shadow-[0_20px_80px_rgba(0,0,0,0.18)]
+      "
+    >
+      <div className="relative w-full h-52 md:h-80 lg:h-[500px] overflow-hidden bg-black">
+
+        <AnimatePresence
+          initial={false}
+          custom={direction}
+          mode="wait"
+        >
           <motion.div
             key={currentIndex}
             custom={direction}
@@ -101,70 +129,183 @@ export default function Carousel() {
             animate="center"
             exit="exit"
             transition={{
-              x: { type: 'spring', stiffness: 220, damping: 26 },
-              opacity: { duration: 0.25 },
-              scale: { duration: 0.35, ease: 'easeOut' },
+              x: {
+                type: 'spring',
+                stiffness: 90,
+                damping: 22,
+              },
+              opacity: {
+                duration: 0.6,
+              },
+              scale: {
+                duration: 0.7,
+              },
+              filter: {
+                duration: 0.7,
+              },
             }}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0"
           >
-            {/* Premium Ken Burns slow-zoom animation */}
             <motion.div
               key={`zoom-${currentIndex}`}
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.06 }}
+              initial={{
+                scale: 1,
+              }}
+              animate={{
+                scale: 1.12,
+              }}
               transition={{
-                duration: 6,
-                ease: 'easeOut',
+                duration: 10,
+                ease: 'linear',
               }}
               className="relative w-full h-full"
             >
               <Image
                 loader={imageKitLoader}
                 src={currentItem.image_url}
-                alt="carousel"
+                alt={`Slide ${currentIndex + 1}`}
                 fill
-                className="object-cover"
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                className="object-cover"
+                sizes="
+                  (max-width:768px) 100vw,
+                  (max-width:1200px) 90vw,
+                  1200px
+                "
               />
-              {/* Premium dark gradient overlay for better contrast and depth */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+
+              {/* Premium overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-black/30" />
+
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation Buttons with premium glassmorphism design */}
         {items.length > 1 && (
           <>
+            {/* Previous Button */}
             <button
               onClick={handlePrev}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white hover:text-black hover:scale-105 active:scale-95 p-2 md:p-3 rounded-full transition-all duration-300 z-10 shadow-lg border border-white/10"
-              aria-label="Previous slide"
+              aria-label="Previous Slide"
+              className="
+                absolute
+                left-4
+                top-1/2
+                -translate-y-1/2
+                z-20
+
+                bg-white/10
+                backdrop-blur-xl
+                border
+                border-white/20
+
+                p-3
+                rounded-full
+
+                text-white
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.25)]
+
+                hover:bg-white/20
+                hover:scale-110
+
+                active:scale-95
+
+                transition-all
+                duration-500
+              "
             >
-              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white hover:text-black hover:scale-105 active:scale-95 p-2 md:p-3 rounded-full transition-all duration-300 z-10 shadow-lg border border-white/10"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
+              <ChevronLeft size={24} />
             </button>
 
-            {/* Dot Indicators with active pills animations */}
-            <div className="absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-10 bg-black/25 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5">
+            {/* Next Button */}
+            <button
+              onClick={handleNext}
+              aria-label="Next Slide"
+              className="
+                absolute
+                right-4
+                top-1/2
+                -translate-y-1/2
+                z-20
+
+                bg-white/10
+                backdrop-blur-xl
+                border
+                border-white/20
+
+                p-3
+                rounded-full
+
+                text-white
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.25)]
+
+                hover:bg-white/20
+                hover:scale-110
+
+                active:scale-95
+
+                transition-all
+                duration-500
+              "
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Indicators */}
+            <div
+              className="
+                absolute
+                bottom-6
+                left-1/2
+                -translate-x-1/2
+                z-20
+
+                flex
+                items-center
+                gap-2
+
+                px-4
+                py-2
+
+                rounded-full
+
+                bg-white/10
+                backdrop-blur-xl
+
+                border
+                border-white/10
+              "
+            >
               {items.map((_, index) => {
-                const isActive = index === currentIndex;
+                const active = index === currentIndex;
+
                 return (
-                  <button
+                  <motion.button
                     key={index}
-                    onClick={() => handleDotClick(index)}
-                    className="relative h-2 rounded-full focus:outline-none transition-all duration-300"
-                    style={{
-                      width: isActive ? '20px' : '8px',
-                      backgroundColor: isActive ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.4)',
+                    layout
+                    onClick={() =>
+                      handleDotClick(index)
+                    }
+                    aria-label={`Slide ${index + 1}`}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 25,
                     }}
-                    aria-label={`Go to slide ${index + 1}`}
+                    className={`
+                      h-2
+                      rounded-full
+                      transition-all
+                      duration-300
+                      ${
+                        active
+                          ? 'w-8 bg-white'
+                          : 'w-2 bg-white/40'
+                      }
+                    `}
                   />
                 );
               })}
@@ -172,6 +313,6 @@ export default function Carousel() {
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

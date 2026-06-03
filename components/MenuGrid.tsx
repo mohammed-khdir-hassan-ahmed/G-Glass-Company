@@ -202,8 +202,8 @@ export default function MenuGrid({ items }: MenuGridProps) {
                                 key={size}
                                 onClick={() => setSelectedSize(selectedSize === size ? null : size)}
                                 className={`flex-1 rounded-md px-1.5 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${selectedSize === size
-                                    ? 'bg-gray-900 text-white shadow-md'
-                                    : 'bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50'
+                                  ? 'bg-gray-900 text-white shadow-md'
+                                  : 'bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50'
                                   }`}
                               >
                                 {size}
@@ -232,14 +232,12 @@ export default function MenuGrid({ items }: MenuGridProps) {
                                 setSelectedColor(isSelected ? null : color);
                                 setErrorMsg(null);
                               }}
-                              className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1 rounded-lg border transition-all duration-200 ${
-                                isSelected ? 'bg-gray-100 border-gray-900 scale-105 shadow-sm' : 'bg-transparent border-transparent hover:bg-gray-100'
-                              }`}
+                              className={`flex flex-col items-center gap-0.5 sm:gap-1 p-1 rounded-lg border transition-all duration-200 ${isSelected ? 'bg-gray-100 border-gray-900 scale-105 shadow-sm' : 'bg-transparent border-transparent hover:bg-gray-100'
+                                }`}
                             >
                               <div
-                                className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full border-2 shadow-sm relative flex items-center justify-center ${
-                                  color === '#FFFFFF' ? 'border-4 border-gray-800' : 'border-gray-300'
-                                }`}
+                                className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full border-2 shadow-sm relative flex items-center justify-center ${color === '#FFFFFF' ? 'border-4 border-gray-800' : 'border-gray-300'
+                                  }`}
                                 style={{ backgroundColor: color }}
                                 title={color}
                               >

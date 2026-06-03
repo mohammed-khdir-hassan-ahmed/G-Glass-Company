@@ -235,135 +235,132 @@ export default function OptimizedMenuItem({
         onMouseLeave={() => setIsHovering(false)}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         dir={isRTL ? 'rtl' : 'ltr'}
-        className={`group relative overflow-hidden cursor-pointer rounded-3xl bg-white border border-gray-100 flex flex-col items-stretch w-full h-full active:shadow-md ${
-          isSoldOut ? 'opacity-60' : ''
-        }`}
+        className={`group relative overflow-hidden cursor-pointer rounded-3xl bg-white border border-gray-100 flex flex-col items-stretch w-full h-full active:shadow-md ${isSoldOut ? 'opacity-60' : ''
+          }`}
       >
-      {/* Premium Favorite Heart Button */}
-      <motion.button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setIsFavorite(!isFavorite);
-        }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setIsFavorite(!isFavorite);
-        }}
-        animate={isFavorite ? { scale: [1, 1.3, 1], rotate: [0, 360] } : {}}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
-        className="absolute top-2.5 z-20 bg-white/90 backdrop-blur-md rounded-full p-2 shadow-md border border-gray-100 hover:shadow-lg transition-all hover:scale-110 active:scale-95 pointer-events-auto"
-        style={{
-          [isRTL ? 'left' : 'right']: '0.65rem'
-        }}
-        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-      >
-        <svg
-          className={`w-4 h-4 sm:w-4.5 sm:h-4.5 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-none text-gray-400'}`}
-          stroke={isFavorite ? 'none' : 'currentColor'}
-          viewBox="0 0 24 24"
+        {/* Premium Favorite Heart Button */}
+        <motion.button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsFavorite(!isFavorite);
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsFavorite(!isFavorite);
+          }}
+          animate={isFavorite ? { scale: [1, 1.3, 1], rotate: [0, 360] } : {}}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className="absolute top-2.5 z-20 bg-white/90 backdrop-blur-md rounded-full p-2 shadow-md border border-gray-100 hover:shadow-lg transition-all hover:scale-110 active:scale-95 pointer-events-auto"
+          style={{
+            [isRTL ? 'left' : 'right']: '0.65rem'
+          }}
+          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={isFavorite ? 0 : 2}
-            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-          />
-        </svg>
-      </motion.button>
+          <svg
+            className={`w-4 h-4 sm:w-4.5 sm:h-4.5 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-none text-gray-400'}`}
+            stroke={isFavorite ? 'none' : 'currentColor'}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={isFavorite ? 0 : 2}
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </motion.button>
 
-      {/* Image Section */}
-      <div className={`relative w-full h-36 sm:h-40 md:h-44 lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-50 to-gray-100 transition-opacity duration-300 ${
-        imageLoaded ? 'opacity-100' : 'opacity-90'
-      }`}>
-        {isSoldOut && (
-          <div className="absolute inset-0 bg-black/45 backdrop-blur-[1.5px] flex items-center justify-center z-10">
-            <span className="text-white font-extrabold text-xs sm:text-sm bg-gradient-to-r from-red-600 to-red-700 px-3 py-1.5 rounded-xl shadow-lg">
-              {getSoldOutText()}
+        {/* Image Section */}
+        <div className={`relative w-full h-36 sm:h-40 md:h-44 lg:h-48 overflow-hidden shrink-0 bg-gradient-to-br from-gray-50 to-gray-100 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-90'
+          }`}>
+          {isSoldOut && (
+            <div className="absolute inset-0 bg-black/45 backdrop-blur-[1.5px] flex items-center justify-center z-10">
+              <span className="text-white font-extrabold text-xs sm:text-sm bg-gradient-to-r from-red-600 to-red-700 px-3 py-1.5 rounded-xl shadow-lg">
+                {getSoldOutText()}
+              </span>
+            </div>
+          )}
+          <Image
+            loader={imageKitLoader}
+            src={imgSrc}
+            alt={displayName}
+            width={200}
+            height={200}
+            sizes={getResponsiveSizes('thumbnail')}
+            priority={priority}
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23f3f4f6' width='200' height='200'/%3E%3C/svg%3E"
+            quality={75}
+            loading={priority ? 'eager' : 'lazy'}
+            className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-108 ${isSoldOut ? 'grayscale' : ''
+              }`}
+            onLoadingComplete={() => setImageLoaded(true)}
+            onError={(e) => {
+              console.warn(`Failed to load image for ${displayName}. Falling back to default logo.`);
+              setImgSrc('/image/logo.jpeg');
+            }}
+          />
+        </div>
+
+        {/* Content Section */}
+        <div className="w-full px-3 py-3 sm:px-4 flex flex-col justify-between flex-1 items-center gap-2">
+          {/* Title, Description & Price */}
+          <div className="flex flex-col items-center gap-1.5 w-full">
+            <h3 className="font-black text-[13px] sm:text-[15px] md:text-base line-clamp-1 leading-tight tracking-tight text-gray-900 text-center">
+              {displayName}
+            </h3>
+            {description && (
+              <p className="text-[10px] sm:text-xs md:text-xs line-clamp-1 leading-normal text-gray-400 text-center px-1 font-medium">
+                {description}
+              </p>
+            )}
+            <span className="text-gray-950 font-black text-[11px] sm:text-[13px] bg-slate-50 border border-slate-200/50 px-2.5 py-0.5 rounded-full shadow-sm mt-1">
+              {item.price}
             </span>
           </div>
-        )}
-        <Image
-          loader={imageKitLoader}
-          src={imgSrc}
-          alt={displayName}
-          width={200}
-          height={200}
-          sizes={getResponsiveSizes('thumbnail')}
-          priority={priority}
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23f3f4f6' width='200' height='200'/%3E%3C/svg%3E"
-          quality={75}
-          loading={priority ? 'eager' : 'lazy'}
-          className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-108 ${
-            isSoldOut ? 'grayscale' : ''
-          }`}
-          onLoadingComplete={() => setImageLoaded(true)}
-          onError={(e) => {
-            console.warn(`Failed to load image for ${displayName}. Falling back to default logo.`);
-            setImgSrc('/image/logo.jpeg');
-          }}
-        />
-      </div>
 
-      {/* Content Section */}
-      <div className="w-full px-3 py-3 sm:px-4 flex flex-col justify-between flex-1 items-center gap-2">
-        {/* Title, Description & Price */}
-        <div className="flex flex-col items-center gap-1.5 w-full">
-          <h3 className="font-black text-[13px] sm:text-[15px] md:text-base line-clamp-1 leading-tight tracking-tight text-gray-900 text-center">
-            {displayName}
-          </h3>
-          {description && (
-            <p className="text-[10px] sm:text-xs md:text-xs line-clamp-1 leading-normal text-gray-400 text-center px-1 font-medium">
-              {description}
-            </p>
-          )}
-          <span className="text-gray-950 font-black text-[11px] sm:text-[13px] bg-slate-50 border border-slate-200/50 px-2.5 py-0.5 rounded-full shadow-sm mt-1">
-            {item.price}
-          </span>
-        </div>
-
-        {/* Colors and Sizes Display at Bottom */}
-        <div className="flex flex-col gap-1.5 items-center w-full mt-auto">
-          {/* Colors */}
-          {itemColors.length > 0 && (
-            <div className="flex items-center gap-1 justify-center">
-              <div className="flex gap-1.5">
-                {itemColors.map((color) => (
-                  <div
-                    key={color}
-                    className="w-3.5 h-3.5 rounded-full border border-gray-300/80 shadow-sm flex-shrink-0 transition-transform hover:scale-110"
-                    style={{ backgroundColor: color }}
-                    title={color}
-                  />
-                ))}
+          {/* Colors and Sizes Display at Bottom */}
+          <div className="flex flex-col gap-1.5 items-center w-full mt-auto">
+            {/* Colors */}
+            {itemColors.length > 0 && (
+              <div className="flex items-center gap-1 justify-center">
+                <div className="flex gap-1.5">
+                  {itemColors.map((color) => (
+                    <div
+                      key={color}
+                      className="w-3.5 h-3.5 rounded-full border border-gray-300/80 shadow-sm flex-shrink-0 transition-transform hover:scale-110"
+                      style={{ backgroundColor: color }}
+                      title={color}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Sizes */}
-          {itemSizes.length > 0 && (
-            <div className="flex items-center gap-1 justify-center flex-wrap">
-              <div className="flex gap-1 flex-wrap justify-center">
-                {itemSizes.slice(0, 2).map((size: string) => (
-                  <div
-                    key={size}
-                    className="px-2.5 py-0.5 text-[9px] font-extrabold rounded-full bg-slate-50 text-slate-500 border border-slate-200/50 shadow-sm"
-                  >
-                    {size}
-                  </div>
-                ))}
-                {itemSizes.length > 2 && (
-                  <div className="px-1.5 py-0.5 text-[9px] font-extrabold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/40 shadow-sm">
-                    +{itemSizes.length - 2}
-                  </div>
-                )}
+            {/* Sizes */}
+            {itemSizes.length > 0 && (
+              <div className="flex items-center gap-1 justify-center flex-wrap">
+                <div className="flex gap-1 flex-wrap justify-center">
+                  {itemSizes.slice(0, 2).map((size: string) => (
+                    <div
+                      key={size}
+                      className="px-2.5 py-0.5 text-[9px] font-extrabold rounded-full bg-slate-50 text-slate-500 border border-slate-200/50 shadow-sm"
+                    >
+                      {size}
+                    </div>
+                  ))}
+                  {itemSizes.length > 2 && (
+                    <div className="px-1.5 py-0.5 text-[9px] font-extrabold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/40 shadow-sm">
+                      +{itemSizes.length - 2}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
       </motion.div>
     </motion.div>
   );

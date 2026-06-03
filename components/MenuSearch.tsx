@@ -158,8 +158,8 @@ export default function MenuSearch({ items }: MenuSearchProps) {
                 onClick={() => handleCategoryClick(category.id)}
                 disabled={isPending}
                 className={`flex flex-col items-center gap-0.5 px-2 md:px-3 py-1.5 md:py-2 rounded-none transition-all duration-200 flex-shrink-0 border-b-2 disabled:opacity-60 ${isSelected
-                    ? 'bg-transparent border-b-2 border-[#000000] text-[#000000]'
-                    : 'bg-transparent hover:border-b-2 hover:border-[#000000] hover:text-[#000000] text-gray-600 border-b-2 border-transparent'
+                  ? 'bg-transparent border-b-2 border-[#000000] text-[#000000]'
+                  : 'bg-transparent hover:border-b-2 hover:border-[#000000] hover:text-[#000000] text-gray-600 border-b-2 border-transparent'
                   }`}
                 style={{ scrollSnapAlign: 'center' }}
                 title={category.name}
@@ -230,7 +230,7 @@ export default function MenuSearch({ items }: MenuSearchProps) {
         <div className="w-full flex-shrink-0 relative group">
           {/* Ambient glass-prism background glow */}
           <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-300 via-slate-400 to-gray-500 rounded-[13px] blur-lg opacity-0 group-hover:opacity-10 group-focus-within:opacity-20 transition duration-500 pointer-events-none z-0"></div>
-          
+
           <div className="animated-border-wrapper relative z-10">
             <div className="animated-border-inner">
               <div className="relative h-full">
