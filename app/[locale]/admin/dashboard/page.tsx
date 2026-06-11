@@ -632,7 +632,7 @@ export default function DashboardPage() {
                           name="name_en"
                           value={formData.name_en}
                           onChange={handleInputChange}
-                          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-gray-950 focus:ring-1 focus:ring-gray-955 bg-white transition placeholder:text-gray-300"
+                          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-base lg:text-sm focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white transition placeholder:text-gray-300"
                           placeholder="English name"
                           required
                         />
@@ -649,7 +649,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           placeholder="ناوی کاڵا"
                           required
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-sm transition placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-sm transition placeholder:text-gray-300"
                         />
                       </div>
                       <div>
@@ -664,7 +664,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           placeholder="اسم المنتج"
                           required
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-sm transition placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-sm transition placeholder:text-gray-300"
                         />
                       </div>
                     </div>
@@ -684,7 +684,7 @@ export default function DashboardPage() {
                           value={formData.description_en}
                           onChange={handleInputChange}
                           placeholder="Description"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -698,7 +698,7 @@ export default function DashboardPage() {
                           value={formData.description_ckb}
                           onChange={handleInputChange}
                           placeholder="وەسف"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -712,7 +712,7 @@ export default function DashboardPage() {
                           value={formData.description_arb}
                           onChange={handleInputChange}
                           placeholder="الوصف"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -751,7 +751,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSize(); }}}
                           placeholder="سایز (نموونە: 40x40)"
-                          className="flex-1 px-3 py-1.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
+                          className="flex-1 px-3 py-1.5 text-base lg:text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
                         />
                         <button
                           type="button"
@@ -773,7 +773,7 @@ export default function DashboardPage() {
                         value={formData.category}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
+                        className="w-full px-3 py-2 text-base lg:text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
                       >
                         <option value="">هەڵبژاردنی بەشەکان</option>
                         {getCategoriesExcludingAll().map((cat) => (
@@ -948,7 +948,7 @@ export default function DashboardPage() {
                           name="name_en"
                           value={formData.name_en}
                           onChange={handleInputChange}
-                          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white transition placeholder:text-gray-300"
+                          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-base lg:text-sm focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white transition placeholder:text-gray-300"
                           placeholder="English name"
                           required
                         />
@@ -965,7 +965,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           placeholder="ناوی کاڵا"
                           required
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-sm transition placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-sm transition placeholder:text-gray-300"
                         />
                       </div>
                       <div>
@@ -980,7 +980,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           placeholder="اسم المنتج"
                           required
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-sm transition placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-sm transition placeholder:text-gray-300"
                         />
                       </div>
                     </div>
@@ -1000,7 +1000,7 @@ export default function DashboardPage() {
                           value={formData.description_en}
                           onChange={handleInputChange}
                           placeholder="Description"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -1014,7 +1014,7 @@ export default function DashboardPage() {
                           value={formData.description_ckb}
                           onChange={handleInputChange}
                           placeholder="وەسف"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -1028,7 +1028,7 @@ export default function DashboardPage() {
                           value={formData.description_arb}
                           onChange={handleInputChange}
                           placeholder="الوصف"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-xs transition resize-none placeholder:text-gray-300"
+                          className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 text-base lg:text-xs transition resize-none placeholder:text-gray-300"
                           rows={2.5}
                         />
                       </div>
@@ -1067,7 +1067,7 @@ export default function DashboardPage() {
                           onChange={handleInputChange}
                           onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSize(); }}}
                           placeholder="سایز (نموونە: 40x40)"
-                          className="flex-1 px-3 py-1.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
+                          className="flex-1 px-3 py-1.5 text-base lg:text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
                         />
                         <button
                           type="button"
@@ -1089,7 +1089,7 @@ export default function DashboardPage() {
                         value={formData.category}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-3 py-2 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
+                        className="w-full px-3 py-2 text-base lg:text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-gray-955 focus:ring-1 focus:ring-gray-955 bg-white text-gray-900 transition"
                       >
                         <option value="">هەڵبژاردنی بەشەکان</option>
                         {getCategoriesExcludingAll().map((cat) => (
