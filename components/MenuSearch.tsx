@@ -285,7 +285,13 @@ export default function MenuSearch({ items }: MenuSearchProps) {
       <div className="mt-6 w-full">
         {selectedCategory === 'all' && Object.keys(groupedItems).length > 0 ? (
           <div className="flex flex-col gap-10 w-full">
-            {Object.entries(groupedItems).map(([categoryId, categoryItems]) => (
+            {Object.entries(groupedItems)
+              .sort(([catA], [catB]) => {
+                if (catA === 'decorations') return -1;
+                if (catB === 'decorations') return 1;
+                return 0;
+              })
+              .map(([categoryId, categoryItems]) => (
               <div key={categoryId} className="w-full">
                 <div className="mb-6 md:mb-8">
                   {/* Mobile: Stacked layout */}
