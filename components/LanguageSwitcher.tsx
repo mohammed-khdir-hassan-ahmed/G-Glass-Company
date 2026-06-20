@@ -34,7 +34,7 @@ export default function LanguageSwitcher() {
   useEffect(() => {
     const isHomePage = getBasePath(pathname) === '/';
     if (isHomePage) {
-      const hasSelected = localStorage.getItem('g_glass_lang_selected');
+      const hasSelected = sessionStorage.getItem('g_glass_lang_selected');
       if (!hasSelected) {
         setOpen(true);
       }
@@ -42,7 +42,7 @@ export default function LanguageSwitcher() {
   }, [pathname]);
 
   const handleLanguageChange = (newLocale: string) => {
-    localStorage.setItem('g_glass_lang_selected', 'true');
+    sessionStorage.setItem('g_glass_lang_selected', 'true');
     if (newLocale === locale) {
       setOpen(false);
       return;
