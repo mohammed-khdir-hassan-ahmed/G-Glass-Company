@@ -2,7 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { useTransition, useState } from 'react';
+import { useTransition, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -31,8 +31,22 @@ export default function LanguageSwitcher() {
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const isHomePage = getBasePath(pathname) === '/';
+    if (isHomePage) {
+      const hasSelected = localStorage.getItem('g_glass_lang_selected');
+      if (!hasSelected) {
+        setOpen(true);
+      }
+    }
+  }, [pathname]);
+
   const handleLanguageChange = (newLocale: string) => {
-    if (newLocale === locale) return;
+    localStorage.setItem('g_glass_lang_selected', 'true');
+    if (newLocale === locale) {
+      setOpen(false);
+      return;
+    }
 
     startTransition(() => {
       const basePath = getBasePath(pathname);
@@ -40,12 +54,28 @@ export default function LanguageSwitcher() {
     });
   };
 
-
   const LANGUAGES = [
     { code: 'ku', label: 'کوردی' },
     { code: 'en', label: 'English' },
     { code: 'ar', label: 'العربية' },
   ];
+
+  const translations = {
+    ku: {
+      title: "زمانەکەت هەڵبژێرە",
+      description: "بە کامە زمان دەتەوێت سەیری ئەم وێبسایتە بکەیت؟",
+    },
+    en: {
+      title: "Select Your Language",
+      description: "Which language do you want to view this website in?",
+    },
+    ar: {
+      title: "اختر لغتك",
+      description: "بأي لغة تريد تصفح هذا الموقع؟",
+    },
+  };
+
+  const currentTranslations = translations[locale as 'ku' | 'en' | 'ar'] || translations.ku;
 
   return (
     <>
@@ -61,10 +91,10 @@ export default function LanguageSwitcher() {
         <DialogContent className="max-w-xs w-full p-6 rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold text-[#000000] text-center">
-              {locale === 'ku' ? 'گۆڕینی زمان' : 'Change Language'}
+              {currentTranslations.title}
             </DialogTitle>
             <DialogDescription className="text-center mb-4">
-              {locale === 'ku' ? 'زمانی دڵخوازت هەڵبژێرە' : 'Select your preferred language'}
+              {currentTranslations.description}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3 items-center">
